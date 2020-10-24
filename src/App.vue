@@ -10,6 +10,18 @@
 </script>
 <style lang="scss">
 @import "public/css/app";
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+  font-family: $font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $fontColor;
+  line-height: 1.5;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -18,15 +30,22 @@
   color: #2c3e50;
 }
 
-.selected{
-  color: $selectedColor;
-}
-
 .icon {
   width: 1em; height: 1em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
 }
+
+
+li{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+  color: $fontColor;
+}
+
 
 </style>

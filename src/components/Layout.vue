@@ -1,6 +1,6 @@
 <template>
-  <div id="content">
-    <div class="main">
+  <div id="content" >
+    <div class="main" :class="className">
       <slot></slot>
     </div>
     <Nav />
@@ -9,18 +9,23 @@
 
 <script lang='ts'>
 export default {
+  props:['className'],
 name: "Layout"
 }
 </script>
 
 <style scoped lang='scss'>
 #content{
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
   .main{
+    height: 100%;
     overflow-y: scroll;
+    &::-webkit-scrollbar{
+      width: 0;
+    }
   }
 }
 </style>

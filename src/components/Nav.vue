@@ -22,27 +22,28 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+@import "public/css/app";
 nav {
   box-shadow: 0 0 3px rgba(#000, .3);
   display: flex;
   flex-direction: row;
-
+  background-color: $navBgColor;
   .router_link {
     flex-grow: 1;
     padding-top: 10px;
     padding-bottom: 5px;
     text-align: center;
+    color: $fontColor;
   }
 
   & .icon {
     display: block;
-  }
-
-  & .icon {
     margin: 0 auto;
     width: 1.5em;
     height: 1.5em;
-    fill: red;
+  }
+  .selected{
+    color: $selectedColor;
   }
 }
 </style>
