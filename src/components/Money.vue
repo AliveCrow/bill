@@ -1,11 +1,9 @@
 <template>
-    <div id="content">
-      <div class="main">
-        <div>Money</div>
-        <div>Money</div>
-      </div>
-      <Nav />
-    </div>
+<div>
+  <Layout>
+    money
+  </Layout>
+</div>
 </template>
 
 <script lang='ts'>

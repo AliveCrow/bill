@@ -17,15 +17,7 @@
   text-align: center;
   color: #2c3e50;
 }
-#content{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  .main{
-    overflow-y: scroll;
-  }
-}
+
 .selected{
   color: $selectedColor;
 }

@@ -1,31 +1,21 @@
 <template>
   <nav>
     <router-link active-class="selected" class="router_link" to="/money">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#money"/>
-      </svg>
+      <Icon name="money" />
       Money
     </router-link>
     <router-link active-class="selected" class="router_link" to="/labels">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#label"/>
-      </svg>
+      <Icon name="label" />
       Labels
     </router-link>
     <router-link active-class="selected" class="router_link" to="/statistics">
-      <svg class="icon" aria-hidden="true">
-        <use xlink:href="#statistics"/>
-      </svg>
+      <Icon name="statistics" />
       Statistics
     </router-link>
   </nav>
 </template>
 
 <script lang='ts'>
-import x from '@/assets/icons/money.svg'
-import y from '@/assets/icons/label.svg'
-import z from '@/assets/icons/statistics.svg'
-console.log(x,y,z)
 export default {
   name: "Nav"
 }

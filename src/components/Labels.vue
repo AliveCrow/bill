@@ -1,9 +1,8 @@
 <template>
-  <div id="content">
-    <div class="main">
-
-    </div>
-    <Nav />
+  <div>
+    <Layout>
+      labels
+    </Layout>
   </div>
 </template>
 

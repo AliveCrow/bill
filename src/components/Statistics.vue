@@ -1,10 +1,8 @@
 <template>
-  <div id="content">
-    <div class="main">
-      <div>statistics</div>
-      <div>statistics</div>
-    </div>
-    <Nav />
+  <div>
+    <Layout>
+      statistics
+    </Layout>
   </div>
 </template>
 
