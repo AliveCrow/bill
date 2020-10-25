@@ -22,10 +22,7 @@ name: "Layout"
   justify-content: space-between;
   .main{
     height: 100%;
-    overflow-y: scroll;
-    &::-webkit-scrollbar{
-      width: 0;
-    }
+    overflow-y: auto;
   }
 }
 </style>

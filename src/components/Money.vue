@@ -6,10 +6,7 @@
         <div class="number">
           123
         </div>
-        <ul>
-          <li class="selected">支出</li>
-          <li>收入</li>
-        </ul>
+        <Types/>
         <label class="remake">
           备注:
           <input type="text" placeholder="请在这里输入备注">
@@ -30,14 +27,14 @@
 </template>
 
 <script lang='ts'>
-import Tag from '@/components/Tag.vue'
-import numberPag from "@/components/numberPag.vue";
+import numberPag from "@/components/money/numberPag.vue";
+import Types from "@/components/money/Types.vue";
 
 export default {
   name: "money",
   components: {
-    'Tag': Tag,
-    'NumberPad': numberPag
+    'NumberPad': numberPag,
+    'Types':Types,
   }
 }
 </script>
@@ -68,19 +65,7 @@ export default {
     padding: 5px 10px;
     font-size: 2.4em;
   }
-  ul{
-    display: flex;
-    li{
-      flex-grow: 1;
-      padding: 10px 20px;
-      font-size: 1.4rem;
-      background-color: $navBgColor;
-    }
-    .selected{
-      color: $selectedColor;
-      border-bottom: 3px solid $selectedColor;
-    }
-  }
+
   .remake{
     padding-left: 10px;
     line-height: 40px;
@@ -98,7 +83,7 @@ export default {
   .tags{
     text-align: left;
     padding:0 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     .tags_box{
       display: flex;
       flex-direction: row;
