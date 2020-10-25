@@ -38,13 +38,17 @@ body{
 }
 
 
-li{
+li,div{
   list-style: none;
+  cursor: default;
 }
 
 a{
   text-decoration: none;
   color: $fontColor;
+}
+span{
+  cursor: default;
 }
 
 

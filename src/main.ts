@@ -6,7 +6,7 @@ import store from './store'
 import Nav from "@/components/Nav.vue";
 import Layout from "@/components/Layout.vue";
 import Icon from "@/components/Icon.vue";
-import Tag from "@/components/Tag.vue";
+import Tag from "@/components/money/Tag.vue";
 
 Vue.config.productionTip = false
 

@@ -6,37 +6,37 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue'
+import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
 
 @Component
-export default class Types extends Vue{
-  type='-';
-
-  @Prop(Number) numberA: number | undefined
-
-  selectType(type: string){
-    if(type!=='-' && type !== '+'){
+export default class Types extends Vue {
+  type = '-';
+  @Prop(Number) numberA: number | undefined;
+  selectType(type: string) {
+    if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
     }
     this.type = type;
   }
-
 }
 </script>
 
 <style scoped lang='scss'>
 @import "public/css/var";
-ul{
+
+ul {
   display: flex;
-  li{
+
+  li {
     flex-grow: 1;
     padding: 10px 20px;
     font-size: 1.4rem;
     background-color: $navBgColor;
   }
-  .selected{
+
+  .selected {
     color: $selectedColor;
     border-bottom: 3px solid $selectedColor;
   }
