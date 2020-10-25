@@ -25,16 +25,19 @@ import {Component, Prop} from 'vue-property-decorator';
 })
 export default class Tag extends Vue {
   @Prop(Array) readonly tagsSource!: string[];
-  selectedTags: string[] = [];
+  @Prop(Array) readonly  selectedTags!: string[];
+  // selectedTags: string[] = [];
 
-  toggle(tag: string) {
+  toggle(tag: string ) {
     const index = this.selectedTags.indexOf(tag);
     if (index >= 0) {
       this.selectedTags.splice(index, 1);
     } else {
       this.selectedTags.push(tag);
     }
+    this.$emit('exposeTags', this.selectedTags);
   }
+
   create() {
     const text = prompt('请输入要添加的标签名称');
     if (text) {
