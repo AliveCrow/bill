@@ -18,14 +18,14 @@ try {
 @Component
 export default class Icon extends Vue {
   name = 'Icon';
-  @Prop(String) idName: string | undefined;
+  @Prop(String) idName!: string ;
   @Prop(String) className!: string | undefined;
   @Prop(Array) readonly tagsSource!: string[];
+
 
   clickIcon(){
     this.$emit('iconToggle')
   }
-
 
   create(){
 

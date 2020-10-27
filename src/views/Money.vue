@@ -1,17 +1,16 @@
 <template>
   <div id="money">
-    <Layout className="layout_one">
-      <div class="money_box">
-        <NumberPad :value.sync="list.num" @submit="submit"/>
-        <Types @exposeType="getType" :value="list.types"/>
-        <label class="remark">
-           <span>备注:</span>
-          <input v-model="list.remark" type="text" placeholder="请在这里输入备注">
-        </label>
-        <Tag :tagsSource.sync="tags" @exposeTags="getTags" :selectedTags="list.tags"/>
-      </div>
-    </Layout>
-
+      <Layout className="layout_one">
+        <div class="money_box">
+          <NumberPad :value.sync="list.num" @submit="submit"/>
+          <Types @exposeType="getType" :value="list.types"/>
+          <label class="remark">
+            <span>备注:</span>
+            <input v-model="list.remark" type="text" placeholder="请在这里输入备注">
+          </label>
+          <Tag :tagsSource.sync="tags" @exposeTags="getTags" :selectedTags="list.tags"/>
+        </div>
+      </Layout>
   </div>
 </template>
 
@@ -20,26 +19,16 @@ import Vue from 'vue';
 import NumberPad from '@/components/money/NumberPad.vue';
 import {Component, Watch} from 'vue-property-decorator';
 import Types from '@/components/money/Types.vue';
-
-type TypeList = {
-  tags: string[];
-  remark: string;
-  types: string;
-  num: number;
-  createAt: Date;
-}
-
-const  lists = localStorage.getItem('lists')
-
+import configList from '@/models/configList';
+import tag from '@/models/configTag';
 
 @Component({
   components: { Types, NumberPad}
 })
 export default class Money extends Vue {
-  tags: string[] = [
-    '衣', '食', '住', '行', 'sd'
-  ];
-  lists: TypeList[] = [];
+  tags: string[] = tag.getter().map(item=>item.name)
+
+  lists:TypeList[] = configList.getter()
 
   list: TypeList = {
     tags: [], remark: '', types: '-', num: 0, createAt: new Date
@@ -53,6 +42,12 @@ export default class Money extends Vue {
     this.list.types = type;
   }
 
+  resetList(){
+    this.list = {
+      tags: [], remark: '', types: '-', num: 0, createAt: new Date
+    };
+  }
+
   submit() {
     if (this.list.num <= 0) {
       alert('请输入消费金额');
@@ -61,17 +56,14 @@ export default class Money extends Vue {
     if (this.list.tags.length === 0) {
       this.list.tags = ['支出'];
     }
-    const store = JSON.parse(JSON.stringify(this.list));
+    const store= configList.clone(this.list);
     this.lists.push(store);
-    this.list = {
-      tags: [], remark: '', types: '-', num: 0, createAt: new Date
-    };
+    this.resetList()
   }
 
   @Watch('lists')
   listsChange() {
-    // console.log(this.lists);
-    localStorage.setItem('lists',JSON.stringify(this.lists))
+    configList.setter(this.lists)
   }
 }
 </script>

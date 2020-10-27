@@ -40,7 +40,18 @@ ul {
 
   .selected {
     color: $selectedColor;
-    border-bottom: 3px solid $selectedColor;
+    //border-bottom: 3px solid $selectedColor;
+    position: relative;
+    overflow: hidden;
+    &:after{
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      content: '';
+      width: 100%;
+      height: 3px;
+      background-color:$selectedColor;
+    }
   }
 }
 </style>
