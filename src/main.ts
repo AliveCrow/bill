@@ -15,6 +15,8 @@ Vue.component('Layout',Layout)
 Vue.component('Icon',Icon)
 Vue.component('Tag',Tag)
 
+
+
 new Vue({
   router,
   store,

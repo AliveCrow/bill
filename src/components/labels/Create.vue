@@ -9,21 +9,19 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue'
+import Vue from 'vue';
 import box from '@/components/labels/box.vue';
 import {Component} from 'vue-property-decorator';
-import tag from '@/models/configTag';
-
 
 @Component({
   components: {box},
 })
-export default class Label extends Vue{
+export default class Label  extends Vue{
 
   text: string= ''
 
   create_tag(){
-    tag.setter(this.text)
+    this.$store.commit('tagsSetter',this.text)
     this.clearInput()
   }
   clearInput(){

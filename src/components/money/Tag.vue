@@ -1,12 +1,12 @@
 <template>
   <div class="tags">
     <div class="tags_box">
-      <div v-for="(item,index) in tagsSource" @click="toggle(item);"
+      <div v-for="(item,index) in tags" @click="toggle(item);"
            class="tag" :class="{selected:selectedTags.indexOf(item)>=0}"
            :name="item" :key="index"
       >
   <span>
-    {{ item }}
+    {{ item.name }}
   </span>
       </div>
       <Icon @iconToggle="create" className="tag add" idName="add"/>
@@ -19,14 +19,16 @@
 import Icon from '@/components/Icon.vue';
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import { mixins } from 'vue-class-component'
+import Tagslist from '@/mixins/tagsList';
+
 
 @Component({
   components: {'Icon': Icon}
 })
-export default class Tag extends Vue {
+export default class Tag extends mixins(Tagslist) {
   @Prop(Array) readonly tagsSource!: string[];
   @Prop(Array) readonly  selectedTags!: string[];
-  // selectedTags: string[] = [];
 
   toggle(tag: string ) {
     const index = this.selectedTags.indexOf(tag);
@@ -41,7 +43,7 @@ export default class Tag extends Vue {
   create() {
     const text = prompt('请输入要添加的标签名称');
     if (text) {
-      this.$emit('update:tagsSource', [...this.tagsSource, text]);
+      this.$store.commit('tagsSetter',text)
     } else {
       return;
     }

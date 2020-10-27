@@ -15,27 +15,20 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
-import confiTag from '@/models/configTag.ts'
+import {Component} from 'vue-property-decorator';
 import Create from '@/components/labels/Create.vue';
 import ListItem from '@/components/labels/ListItem.vue';
-import tag from '@/models/configTag.ts';
+import Tagslist from '@/mixins/tagsList';
+import {mixins} from 'vue-class-component';
 @Component({
   components: {ListItem, Create}
 })
-export default class Label extends Vue {
+export default class Label  extends mixins(Tagslist) {
   input:any;edit:any;
-  tags = tag.getter()
-
-  created(){
-    console.log(this.tags);
-  }
 
   mounted(){
     this.input = document.querySelectorAll('.tag_input')
     this.edit = document.querySelectorAll('.edit')
-    console.log(this.edit);
   }
 
 }

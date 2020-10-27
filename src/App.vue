@@ -23,7 +23,7 @@ body{
   line-height: 1.5;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

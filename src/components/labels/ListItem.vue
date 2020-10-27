@@ -14,9 +14,8 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-import {Component, Prop, Watch} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import box from '@/components/labels/box.vue';
-import tag from '@/models/configTag';
 
 
 @Component({
@@ -35,22 +34,23 @@ export default class ListItem extends Vue {
       this.input[this.index].select();
       this.idName = ['delete', 'confirm'];
     } else {
-      let result = tag.update(this.index, this.tagName);
-      if(result==='fail'){
-        this.tagName = this.tag
+      let argus = {index: this.index, tagName: this.tagName};
+      let result = this.$store.commit('tagsUpdate', argus);
+      if (result === 'fail') {
+        this.tagName = this.tag;
       }
       this.idName = ['label', 'edit'];
     }
   }
 
-  inputValue(event:KeyboardEvent) {
+  inputValue(event: KeyboardEvent) {
     // @ts-ignore
-    this.tagName = event.target.value
+    this.tagName = event.target.value;
   }
 
   delete_tag() {
     if (this.idName[0] === 'delete') {
-      tag.remove(this.index)
+      this.$store.commit('tagsRemoved', this.index);
     }
   }
 
