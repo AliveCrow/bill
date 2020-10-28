@@ -35,7 +35,7 @@ export default class ListItem extends Vue {
       this.idName = ['delete', 'confirm'];
     } else {
       let argus = {index: this.index, tagName: this.tagName};
-      let result = this.$store.commit('tagsUpdate', argus);
+      let result = this.$store.commit('tagsStore/tagsUpdate', argus);
       if (result === 'fail') {
         this.tagName = this.tag;
       }
@@ -50,7 +50,7 @@ export default class ListItem extends Vue {
 
   delete_tag() {
     if (this.idName[0] === 'delete') {
-      this.$store.commit('tagsRemoved', this.index);
+      this.$store.commit('tagsStore/tagsRemoved', this.index);
     }
   }
 

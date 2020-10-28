@@ -15,33 +15,37 @@
 </template>
 
 <script lang='ts'>
+import Vue from 'vue';
 import NumberPad from '@/components/money/NumberPad.vue';
 import {Component} from 'vue-property-decorator';
 import Types from '@/components/money/Types.vue';
-import {mixins} from 'vue-class-component';
-import RecordList from '@/mixins/recordList';
+
 
 @Component({
   components: {Types, NumberPad}
 })
 
-export default class Money extends mixins(RecordList) {
+export default class Money extends Vue {
   // @ts-ignore
   $router;
   recordListItem: TypeList = {
     tags: [], remark: '', types: '-', num: 0, createAt: new Date
   };
+
   getTags(list: string[]) {
     this.recordListItem.tags = list;
   }
+
   getType(type: string) {
     this.recordListItem.types = type;
   }
+
   resetList() {
     this.recordListItem = {
       tags: [], remark: '', types: '-', num: 0, createAt: new Date
     };
   }
+
   submit() {
     if (this.recordListItem.num <= 0) {
       alert('请输入消费金额');
@@ -50,7 +54,7 @@ export default class Money extends mixins(RecordList) {
     if (this.recordListItem.tags.length === 0) {
       this.recordListItem.tags = ['支出'];
     }
-    this.$store.commit('recordListSetter', this.recordListItem);
+    this.$store.commit('recordStore/recordListSetter', this.recordListItem);
     this.resetList();
   }
 }

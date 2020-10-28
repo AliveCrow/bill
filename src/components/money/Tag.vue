@@ -20,13 +20,13 @@ import Icon from '@/components/Icon.vue';
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import { mixins } from 'vue-class-component'
-import Tagslist from '@/mixins/tagsList';
+import listDepository from '@/mixins/listDepository';
 
 
 @Component({
   components: {'Icon': Icon}
 })
-export default class Tag extends mixins(Tagslist) {
+export default class Tag extends mixins(listDepository) {
   @Prop(Array) readonly tagsSource!: string[];
   @Prop(Array) readonly  selectedTags!: string[];
 
@@ -43,7 +43,7 @@ export default class Tag extends mixins(Tagslist) {
   create() {
     const text = prompt('请输入要添加的标签名称');
     if (text) {
-      this.$store.commit('tagsSetter',text)
+      this.$store.commit('tagsStore/tagsSetter',text)
     } else {
       return;
     }

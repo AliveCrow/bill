@@ -21,7 +21,7 @@ export default class Label  extends Vue{
   text: string= ''
 
   create_tag(){
-    this.$store.commit('tagsSetter',this.text)
+    this.$store.commit('tagsStore/tagsSetter',this.text)
     this.clearInput()
   }
   clearInput(){

@@ -18,12 +18,12 @@
 import {Component} from 'vue-property-decorator';
 import Create from '@/components/labels/Create.vue';
 import ListItem from '@/components/labels/ListItem.vue';
-import Tagslist from '@/mixins/tagsList';
+import listDepository from '@/mixins/listDepository';
 import {mixins} from 'vue-class-component';
 @Component({
   components: {ListItem, Create}
 })
-export default class Label  extends mixins(Tagslist) {
+export default class Label  extends mixins(listDepository) {
   input:any;edit:any;
 
   mounted(){
