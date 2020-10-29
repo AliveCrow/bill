@@ -5,12 +5,14 @@ type storeTags = {
     tagsDataSource:Tag[] | undefined
 }
 
+const state:storeTags = {
+    tagsListName: 'tags',
+    tagsDataSource: [],
+}
+
 const tagsStore = {
     namespaced:true,
-    state: () => ({
-        tagsListName: 'tags',
-        tagsDataSource: [],
-    }) ,
+    state,
     mutations: {
         //tag
         tagsGetter: function (state:storeTags) {
@@ -51,7 +53,6 @@ const tagsStore = {
             }
         },
         tagsRemoved: function (state:storeTags,index:number){
-            console.log(index);
             state.tagsDataSource!.splice(index,1)
             localStorage.setItem(state.tagsListName, JSON.stringify(state.tagsDataSource));
             return 'success'

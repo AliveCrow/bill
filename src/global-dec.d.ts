@@ -4,7 +4,7 @@ type TypeList = {
     remark: string;
     types: string;
     num: number;
-    createAt: Date;
+    createAt: string;
 }
 type Tag = {
     id: number;
@@ -12,7 +12,7 @@ type Tag = {
 }
 type TagConfig = {
     data: Tag[];
-    getter: () => Tag[];
+    getter: (recordStoreExtracting: string) => Tag[];
     setter: (value: Tag) => 'success' | 'duplicated';
     update: (index: number, tagName: string) => 'success' | 'fail';
     remove:(index:number) =>  'success' | 'fail';

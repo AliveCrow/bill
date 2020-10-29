@@ -43,7 +43,7 @@ nav {
     height: 1.5em;
   }
   .selected{
-    color: $selectedColor;
+    color: $headerColor;
   }
 }
 </style>

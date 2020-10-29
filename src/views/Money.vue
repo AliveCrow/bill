@@ -19,6 +19,8 @@ import Vue from 'vue';
 import NumberPad from '@/components/money/NumberPad.vue';
 import {Component} from 'vue-property-decorator';
 import Types from '@/components/money/Types.vue';
+import dayjs from 'dayjs';
+
 
 
 @Component({
@@ -42,7 +44,7 @@ export default class Money extends Vue {
 
   resetList() {
     this.recordListItem = {
-      tags: [], remark: '', types: '-', num: 0, createAt: new Date
+      tags: [], remark: '', types: '-', num: 0, createAt:new Date
     };
   }
 

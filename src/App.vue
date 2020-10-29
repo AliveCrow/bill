@@ -21,6 +21,9 @@ body{
   -moz-osx-font-smoothing: grayscale;
   color: $fontColor;
   line-height: 1.5;
+  ::-webkit-scrollbar{
+    width: 0;
+  }
 }
 #app {
   font-family: $font-family;
@@ -50,6 +53,10 @@ a{
 span{
   cursor: default;
 }
-
-
+.clearfix::after{
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
 </style>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import dayjs from 'dayjs';
 
 // Define a super class component
 @Component
@@ -10,8 +11,24 @@ export default class listDepository extends Vue {
         this.$store.commit('tagsStore/tagsGetter')
         return this.$store.state.tagsStore.tagsDataSource
     }
+    //
+    get records(){
+        return this.$store.getters['recordStore/setGroupings']
+    }
+
+    //账单
+    get toMonthList(){
+        return  this.$store.state.billyStore.toMonthList
+    }
+    get total(){
+        return  this.$store.state.billyStore.total
+    }
+    get billy(){
+        return  this.$store.state.billyStore.billy
+    }
 
     created(){
         this.$store.commit('recordStore/recordListgetter')
     }
+
 }
