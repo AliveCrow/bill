@@ -6,13 +6,6 @@
     </div>
     <div class="header_middle">
       <SelectDate :date.sync = 'date'  />
-<!--      <label for="start" class="header_input">-->
-<!--        <input type="month" id="start" name="start"-->
-<!--               :min="minDate" :value="value" ref="year_month"-->
-<!--               @change="selectDate"-->
-<!--        >-->
-<!--        <eva-icon name="chevron-down-outline" fill="#fff" class="icons"></eva-icon>-->
-<!--      </label>-->
       <div class="header_middle_select">
         <span :class="{selected:povit==='-'}" @click="selectPayOrIncome('-')">支出</span>
         <span :class="{selected:povit ==='+'}" @click="selectPayOrIncome('+')">收入</span>

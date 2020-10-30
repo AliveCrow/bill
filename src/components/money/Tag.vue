@@ -1,6 +1,6 @@
 <template>
-  <div class="tags">
-    <div class="tags_box">
+  <div class="tags" ref="tags">
+    <div class="tags_box" >
       <div v-for="(item,index) in tags" @click="toggle(item);"
            class="tag" :class="{selected:selectedTags.indexOf(item)>=0}"
            :name="item" :key="index"
@@ -30,14 +30,20 @@ export default class Tag extends mixins(listDepository) {
   @Prop(Array) readonly tagsSource!: string[];
   @Prop(Array) readonly  selectedTags!: string[];
 
+  el :Element = '<Message message="123"  type="info">'
+
   toggle(tag: string ) {
     const index = this.selectedTags.indexOf(tag);
-    if (index >= 0) {
-      this.selectedTags.splice(index, 1);
-    } else {
-      this.selectedTags.push(tag);
+    if(this.selectedTags.length !== 0 && index < 0){
+      alert('只能选择一个标签')
+    }else {
+      if (index >= 0) {
+        this.selectedTags.splice(index, 1);
+      } else {
+        this.selectedTags.push(tag);
+      }
+      this.$emit('exposeTags', this.selectedTags);
     }
-    this.$emit('exposeTags', this.selectedTags);
   }
 
   create() {
@@ -48,6 +54,8 @@ export default class Tag extends mixins(listDepository) {
       return;
     }
   }
+
+
 }
 </script>
 

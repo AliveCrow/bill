@@ -37,6 +37,9 @@ export default class StaticHeader extends mixins(listDepository) {
   payOrIncome: string = '-';
   billyType: string = '月账单';
   date: string = dayjs().format('YYYY-MM');
+
+  yearBilly:number = 0;
+
   monthListObj: { list: [], date: string } = {
     list: this.records,
     date: this.date
@@ -60,7 +63,7 @@ export default class StaticHeader extends mixins(listDepository) {
   @Watch('payOrIncome')
   onPayOrIncome() {
     this.payOrIncomeSelectObj.payOrIncome = this.payOrIncome;
-    this.init();
+    this.onBillyType()
   }
 
   @Watch('date')
@@ -73,9 +76,8 @@ export default class StaticHeader extends mixins(listDepository) {
 
   @Watch('billyType')
   onBillyType() {
-    //todo
-    //优化-使用展开运算符看看?
-
+    //todo 优化-使用展开运算符看看?
+    //
     this.$store.commit('billyStore/reset');
     let currentYear;
     let currentYearAllist: [] = [];
@@ -91,13 +93,21 @@ export default class StaticHeader extends mixins(listDepository) {
       currentYear = includeCurrentYear.map(item => {
         return item.items;
       });
-      for (let i = 0; i < currentYear.length; i++) {
+      let a: any[] = []
+      let x = currentYear.forEach(item=>{
+        item.forEach(item=>{
+          if(item.types === this.payOrIncome){
+            a.push(item)
+          }
+        })
+      })
+      for (let i = 0; i < a.length; i++) {
         // @ts-ignore
-        currentYearAllist = currentYear[i].map(item => {
+        currentYearAllist = a.map(item => {
           return item;
-        }).concat(currentYearAllist);
+        })
       }
-      total = currentYearAllist.length;
+      total = a.length;
       currentYearAllist.forEach(item => {
         // @ts-ignore
         billy = billy + item.num;

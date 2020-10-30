@@ -8,7 +8,8 @@
           <span>备注:</span>
           <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
         </label>
-        <Tag @exposeTags="getTags" :selectedTags="recordListItem.tags"/>
+
+        <Tag @exposeTags="getTags" :selectedTags="recordListItem.tags" />
       </div>
     </Layout>
   </div>
@@ -30,6 +31,7 @@ import dayjs from 'dayjs';
 })
 
 export default class Money extends Vue {
+
   // @ts-ignore
   $router;
   recordListItem: TypeList = {
