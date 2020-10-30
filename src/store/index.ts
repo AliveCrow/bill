@@ -8,9 +8,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state:{
-
+        date:''
     },
-    mutations:{},
+    mutations:{
+        setDate(state,date){
+            state.date = date
+        }
+    },
     actions:{},
     getters:{},
     modules: {

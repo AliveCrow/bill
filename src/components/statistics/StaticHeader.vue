@@ -1,16 +1,5 @@
 <template>
   <div>
-    <header>
-      <Header
-          :billyType.sync="billyType"
-          :payOrIncome.sync="payOrIncome"
-          :date.sync="date"
-      />
-      <div class="header_bottom">
-        <span>共{{ payOrIncome === '-' ? '支出' : '收入' }}{{ total }}笔,合计</span>
-        <p class="consume">{{ billy }}</p>
-      </div>
-    </header>
     <div class="container">
       <Echart name="每日统计" eChartsType="pie" replaceWith="今天没有记录"/>
       <Echart name="每月统计" eChartsType="line" replaceWith="本月没有记录" :date="date"/>
@@ -29,9 +18,10 @@ import dayjs from 'dayjs';
 import Header from '@/components/statistics/Header.vue';
 import InfoList from '@/components/statistics/InfoList.vue';
 import myEchart from '@/components/statistics/Echart.vue';
+import Sum from '@/components/statistics/Sum.vue';
 
 @Component({
-  components: {Echart: myEchart, InfoList, Header}
+  components: {Sum, Echart: myEchart, InfoList, Header}
 })
 export default class StaticHeader extends mixins(listDepository) {
   payOrIncome: string = '-';
@@ -40,83 +30,6 @@ export default class StaticHeader extends mixins(listDepository) {
 
   yearBilly:number = 0;
 
-  monthListObj: { list: [], date: string } = {
-    list: this.records,
-    date: this.date
-  };
-  payOrIncomeSelectObj: { date: string, payOrIncome: string } = {
-    date: this.date,
-    payOrIncome: this.payOrIncome
-  };
-
-  init() {
-    this.monthListObj.list = this.records;
-    this.$store.commit('billyStore/reset');
-    this.$store.commit('billyStore/MonthList', this.monthListObj);
-    this.$store.commit('billyStore/payOrIncomeSelect', this.payOrIncomeSelectObj);
-  }
-
-  created() {
-    this.init();
-  }
-
-  @Watch('payOrIncome')
-  onPayOrIncome() {
-    this.payOrIncomeSelectObj.payOrIncome = this.payOrIncome;
-    this.onBillyType()
-  }
-
-  @Watch('date')
-  onDate() {
-    console.log(this.date);
-    this.monthListObj.date = this.date;
-    this.payOrIncomeSelectObj.date = this.date;
-    this.init();
-  }
-
-  @Watch('billyType')
-  onBillyType() {
-    //todo 优化-使用展开运算符看看?
-    //
-    this.$store.commit('billyStore/reset');
-    let currentYear;
-    let currentYearAllist: [] = [];
-    let billy: number = 0;
-    let total: number = 0;
-    let date = dayjs(this.date).format('YYYY');
-    if (this.billyType === '年账单') {
-      // @ts-ignore
-      let includeCurrentYear = this.records.filter(item =>
-          dayjs(item.createAt).format('YYYY') === date
-      );
-      // @ts-ignore
-      currentYear = includeCurrentYear.map(item => {
-        return item.items;
-      });
-      let a: any[] = []
-      let x = currentYear.forEach(item=>{
-        item.forEach(item=>{
-          if(item.types === this.payOrIncome){
-            a.push(item)
-          }
-        })
-      })
-      for (let i = 0; i < a.length; i++) {
-        // @ts-ignore
-        currentYearAllist = a.map(item => {
-          return item;
-        })
-      }
-      total = a.length;
-      currentYearAllist.forEach(item => {
-        // @ts-ignore
-        billy = billy + item.num;
-      });
-      this.$store.commit('billyStore/setBilly', {billy, total});
-    } else {
-      this.init();
-    }
-  }
 }
 </script>
 
@@ -250,7 +163,7 @@ header {
 .container {
   background-color: #fff;
   border-radius: 20px;
-  margin-top: -40px;
+  //margin-top: -20px;
 }
 </style>
 

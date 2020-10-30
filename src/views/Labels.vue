@@ -42,9 +42,9 @@ export default class Label  extends mixins(listDepository) {
 .label_page {
   .modify {
     font-size: 1.4rem;
-    color: $fontColor;
+    color: $whiteColor;
     padding: 10px;
-    background-color: $navBgColor;
+    background-color: $headerColor;
     margin-bottom: 10px;
   }
 

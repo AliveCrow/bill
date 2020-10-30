@@ -28,6 +28,8 @@ nav {
   display: flex;
   flex-direction: row;
   background-color: $navBgColor;
+  position: relative;
+  z-index: 99;
   .router_link {
     flex-grow: 1;
     padding-top: 10px;

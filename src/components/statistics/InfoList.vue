@@ -46,9 +46,7 @@ export default class InfoList extends mixins(listDepository){
     return sum
   }
 
-
 }
-
 
 
 </script>
@@ -58,7 +56,8 @@ export default class InfoList extends mixins(listDepository){
 
 .into_list {
   .into_list_date {
-    background-color: rgba($navBgColor,.3);
+    box-shadow: 0 1px 0 rgba(#000,.2);
+    //background-color: rgba($navBgColor,.3);
     > p:nth-child(1) {
       font-size: 1.5rem;
       text-align: left;
@@ -80,6 +79,7 @@ export default class InfoList extends mixins(listDepository){
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    box-shadow: 0 1px 0 rgba(#000,.2);
 
     span {
       margin: 0 20px;
@@ -91,11 +91,13 @@ export default class InfoList extends mixins(listDepository){
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: rgba($fontColor,.6);
     }
 
     > span:nth-child(2) {
       float: right;
       margin-left: 10px;
+      color: #000;
     }
   }
 }

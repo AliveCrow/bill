@@ -50,7 +50,6 @@ export default class myEchart extends mixins(listDepository) {
 
   change(bool: boolean) {
     this.selected = bool;
-    this.newArr = [];
   }
 
 

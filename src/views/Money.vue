@@ -1,16 +1,19 @@
 <template>
   <div id="money">
-    <Layout className="layout_one">
-      <div class="money_box">
-        <NumberPad :value.sync="recordListItem.num" @submit="submit"/>
-        <Types @exposeType="getType" :value="recordListItem.types"/>
-        <label class="remark">
-          <span>备注:</span>
-          <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
-        </label>
-
-        <Tag @exposeTags="getTags" :selectedTags="recordListItem.tags" />
+    <Layout className="layout_one" ref="layout_one">
+      <span class="title">账单</span>
+      <div class="info_box">
+        <InfoList :date="date" />
       </div>
+<!--      <div class="money_box">-->
+<!--        <NumberPad :value.sync="recordListItem.num" @submit="submit"/>-->
+<!--        <Types @exposeType="getType" :value="recordListItem.types"/>-->
+<!--        <label class="remark">-->
+<!--          <span>备注:</span>-->
+<!--          <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">-->
+<!--        </label>-->
+<!--        <Tag @exposeTags="getTags" :selectedTags="recordListItem.tags" />-->
+<!--      </div>-->
     </Layout>
   </div>
 </template>
@@ -21,37 +24,36 @@ import NumberPad from '@/components/money/NumberPad.vue';
 import {Component} from 'vue-property-decorator';
 import Types from '@/components/money/Types.vue';
 import dayjs from 'dayjs';
+import HeaderMain from '@/components/statistics/HeaderMain.vue';
+import InfoList from '@/components/statistics/InfoList.vue';
 
 
 //todo 标签只能选择一个,没选标签自动归类为支出,或者收入
 //
 
 @Component({
-  components: {Types, NumberPad}
+  components: {InfoList, HeaderMain, Types, NumberPad}
 })
 
 export default class Money extends Vue {
-
   // @ts-ignore
   $router;
   recordListItem: TypeList = {
     tags: [], remark: '', types: '-', num: 0, createAt: new Date
   };
+  date = this.$store.state.date
 
   getTags(list: string[]) {
     this.recordListItem.tags = list;
   }
-
   getType(type: string) {
     this.recordListItem.types = type;
   }
-
   resetList() {
     this.recordListItem = {
       tags: [], remark: '', types: '-', num: 0, createAt:new Date
     };
   }
-
   submit() {
     if (this.recordListItem.num <= 0) {
       alert('请输入消费金额');
@@ -63,16 +65,27 @@ export default class Money extends Vue {
     this.$store.commit('recordStore/recordListSetter', this.recordListItem);
     this.resetList();
   }
+
+
+
+
 }
 </script>
 <style scoped lang='scss'>
 @import "../../public/css/var";
 
+.title{
+  display: block;
+  margin: 10px;
+  font-size: 1.4rem;
+}
+.info_box{
+  border-radius: 50px;
+}
 .money_box {
   height: 100%;
   display: flex;
   flex-direction: column-reverse;
-
   .remark {
     padding-left: 10px;
     line-height: 40px;
