@@ -12,7 +12,8 @@
       </div>
     </header>
         <div class="container">
-            <Echart />
+            <Echart name="每日统计" eChartsType="pie" replaceWith="今天没有记录"  />
+            <Echart name="每月统计" eChartsType="line" replaceWith="本月没有记录" :date="date" />
             <InfoList :date="date" />
         </div>
   </div>
@@ -27,10 +28,10 @@ import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
 import Header from '@/components/statistics/Header.vue';
 import InfoList from '@/components/statistics/InfoList.vue';
-import Echart from '@/components/statistics/Echart.vue';
+import myEchart from '@/components/statistics/Echart.vue';
 
 @Component({
-  components: {Echart, InfoList, Header}
+  components: {Echart: myEchart, InfoList, Header}
 })
 export default class StaticHeader extends mixins(listDepository) {
   payOrIncome: string = '-';

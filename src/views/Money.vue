@@ -22,6 +22,8 @@ import Types from '@/components/money/Types.vue';
 import dayjs from 'dayjs';
 
 
+//todo 标签只能选择一个,没选标签自动归类为支出,或者收入
+//
 
 @Component({
   components: {Types, NumberPad}

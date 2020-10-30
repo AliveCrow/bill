@@ -14,3 +14,6 @@ declare module 'vue/types/vue' {
     $clearRemark: '';
   }
 }
+declare module 'echarts/lib/echarts'{
+
+}

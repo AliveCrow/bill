@@ -11,6 +11,11 @@ export default class listDepository extends Vue {
         this.$store.commit('tagsStore/tagsGetter')
         return this.$store.state.tagsStore.tagsDataSource
     }
+
+    get primordialRecords(){
+        return this.$store.state.recordStore.recordLists
+    }
+
     //
     get records(){
         return this.$store.getters['recordStore/setGroupings']

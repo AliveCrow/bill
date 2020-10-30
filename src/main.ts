@@ -9,6 +9,9 @@ import Icon from "@/components/Icon.vue";
 import Tag from "@/components/money/Tag.vue";
 // @ts-ignore
 import EvaIcons from 'vue-eva-icons';
+// @ts-ignore
+import echarts from 'echarts'
+
 
 
 
@@ -16,6 +19,8 @@ import EvaIcons from 'vue-eva-icons';
 Vue.use(EvaIcons)
 
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts
+
 
 Vue.component('Nav',Nav)
 Vue.component('Layout',Layout)

@@ -35,18 +35,19 @@ const billyStore = {
                 return;
             } else {
                 // @ts-ignore
-                let midArr = []
+                let midArr: any[] = []
                 state.toMonthList.forEach(res=>{
-                     let x = res.items.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; types: string; }) =>
+                     // @ts-ignore
+                    let x = res.items.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; types: string; }) =>
                         dayjs(item.createAt).format('YYYY-MM') === obj.date
                         &&
                         item.types === obj.payOrIncome
                     )
                     midArr.push(x)
                 })
-                let monthPayOrIncomeList =[]
+                let monthPayOrIncomeList: { num: number; }[] =[]
                 midArr.forEach(res=>{
-                    res.forEach(item=>{
+                    res.forEach((item: { num: number; })=>{
                         monthPayOrIncomeList.push(item)
                     })
                 })
