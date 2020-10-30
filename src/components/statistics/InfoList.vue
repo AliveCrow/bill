@@ -25,18 +25,19 @@ import dayjs from 'dayjs';
 
 @Component
 export default class InfoList extends mixins(listDepository){
-@Prop(String) date:string ;
+@Prop(String) date: string | undefined ;
 
-  payOrIncome:any[];
-  sum:[];
+
+  payOrIncome: any[] | undefined;
+  sum: [] | undefined;
 
   created() {
-    let list = this.toMonthList.map(item=> {
+    let list = this.toMonthList.map((item: { items: any[]; })=> {
       return item.items.filter(res => res.types === '-')
     })
 
   }
-  getSum(items,type){
+  getSum(items: any[], type: any){
     let sum =0
     let x = items.filter(item=>item.types === type)
     x.forEach(item=>{

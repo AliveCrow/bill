@@ -11,18 +11,18 @@
         <p class="consume">{{ billy }}</p>
       </div>
     </header>
-        <div class="container">
-            <Echart name="每日统计" eChartsType="pie" replaceWith="今天没有记录"  />
-            <Echart name="每月统计" eChartsType="line" replaceWith="本月没有记录" :date="date" />
-            <InfoList :date="date" />
-        </div>
+    <div class="container">
+      <Echart name="每日统计" eChartsType="pie" replaceWith="今天没有记录"/>
+      <Echart name="每月统计" eChartsType="line" replaceWith="本月没有记录" :date="date"/>
+      <InfoList :date="date"/>
+    </div>
   </div>
 
 </template>
 
 <script lang='ts'>
 // import Vue from 'vue'
-  import {Component, Watch} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
@@ -37,36 +37,40 @@ export default class StaticHeader extends mixins(listDepository) {
   payOrIncome: string = '-';
   billyType: string = '月账单';
   date: string = dayjs().format('YYYY-MM');
-  monthListObj: {list:[],date:string} = {
+  monthListObj: { list: [], date: string } = {
     list: this.records,
-    date:  this.date
+    date: this.date
   };
-  payOrIncomeSelectObj: {date:string,payOrIncome:string} = {
+  payOrIncomeSelectObj: { date: string, payOrIncome: string } = {
     date: this.date,
     payOrIncome: this.payOrIncome
   };
 
-  init(){
+  init() {
     this.monthListObj.list = this.records;
     this.$store.commit('billyStore/reset');
     this.$store.commit('billyStore/MonthList', this.monthListObj);
     this.$store.commit('billyStore/payOrIncomeSelect', this.payOrIncomeSelectObj);
   }
+
   created() {
-    this.init()
+    this.init();
   }
+
   @Watch('payOrIncome')
   onPayOrIncome() {
     this.payOrIncomeSelectObj.payOrIncome = this.payOrIncome;
-    this.init()
+    this.init();
   }
+
   @Watch('date')
   onDate() {
     console.log(this.date);
     this.monthListObj.date = this.date;
     this.payOrIncomeSelectObj.date = this.date;
-    this.init()
+    this.init();
   }
+
   @Watch('billyType')
   onBillyType() {
     //todo
@@ -98,10 +102,9 @@ export default class StaticHeader extends mixins(listDepository) {
         // @ts-ignore
         billy = billy + item.num;
       });
-      this.$store.commit('billyStore/setBilly', {billy,total});
-    }
-    else{
-      this.init()
+      this.$store.commit('billyStore/setBilly', {billy, total});
+    } else {
+      this.init();
     }
   }
 }
@@ -233,6 +236,7 @@ header {
   }
 
 }
+
 .container {
   background-color: #fff;
   border-radius: 20px;

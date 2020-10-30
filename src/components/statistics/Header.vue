@@ -5,13 +5,14 @@
       <span class="year date" @click="billC(false)" :class="{selected:!selected}">年账单</span>
     </div>
     <div class="header_middle">
-      <label for="start" class="header_input">
-        <input type="month" id="start" name="start"
-               :min="minDate" :value="value" ref="year_month"
-               @change="selectDate"
-        >
-        <eva-icon name="chevron-down-outline" fill="#fff" class="icons"></eva-icon>
-      </label>
+      <SelectDate :date.sync = 'date'  />
+<!--      <label for="start" class="header_input">-->
+<!--        <input type="month" id="start" name="start"-->
+<!--               :min="minDate" :value="value" ref="year_month"-->
+<!--               @change="selectDate"-->
+<!--        >-->
+<!--        <eva-icon name="chevron-down-outline" fill="#fff" class="icons"></eva-icon>-->
+<!--      </label>-->
       <div class="header_middle_select">
         <span :class="{selected:povit==='-'}" @click="selectPayOrIncome('-')">支出</span>
         <span :class="{selected:povit ==='+'}" @click="selectPayOrIncome('+')">收入</span>
@@ -24,15 +25,15 @@
 // minDate: string = '2020-01';
 import Vue from 'vue';
 import dayjs from 'dayjs';
-import {Component, Prop} from 'vue-property-decorator';
-
-@Component
+import {Component, Prop, Watch} from 'vue-property-decorator';
+import SelectDate from '@/components/statistics/SelectDate.vue';
+@Component({
+  components: {SelectDate}
+})
 export default class Header extends Vue {
-
-  minDate: string = '2001-01';
   selected: boolean = true;
   povit: string = '-';
-  value: string = dayjs().format('YYYY-MM');
+  date: string = dayjs().format('YYYY-MM');
 
   billC(bool:boolean) {
     this.selected = bool;
@@ -40,14 +41,17 @@ export default class Header extends Vue {
 
   }
 
-  selectDate(e:any) {
-    this.value = e.target.value;
-    this.$emit('update:date', dayjs(e.target.value).format('YYYY-MM'));
-  }
-
   selectPayOrIncome(e:string) {
     this.povit = e;
     this.$emit('update:payOrIncome', e);
+  }
+
+  created(){
+  }
+
+  @Watch('date')
+  onDate(){
+    this.$emit('update:date',this.date)
   }
 
 };
@@ -89,7 +93,6 @@ export default class Header extends Vue {
     border-radius: 5px;
   }
 }
-
 .header_middle {
   display: flex;
   align-items: center;
@@ -113,36 +116,7 @@ export default class Header extends Vue {
     }
   }
 
-  input[type='month']::-webkit-calendar-picker-indicator {
-    background-image: none;
-    margin-right: 10px;
-    color: #666;
-    position: absolute;
-    width: 100px;
-    left: 0;
-    outline: none;
-  }
-
-  .icons {
-    position: absolute;
-    left: 105px;
-    height: 20px;
-    pointer-events: none;
-  }
-
-  input[type='month'] {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    width: 100px;
-    font-family: $font-family;
-    margin-left: 30px;
-    line-height: 1.1rem;
-    outline: none;
-    border: none;
-    background-color: #fff0;
-    color: #fff;
-
-  }
 }
+
+
 </style>

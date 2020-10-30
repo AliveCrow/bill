@@ -7,7 +7,6 @@
         <button :class="{selected:!selected}" @click="change(false)">收入</button>
       </div>
     </div>
-
     <div class="echarts" v-if="eChartsType==='line'?lineData.length!==0:newArr.length!==0" :key="key1">
       <div id="main" ref="container" style="width: 100%;height:480px">
       </div>
@@ -26,9 +25,12 @@ import listDepository from '@/mixins/listDepository';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 import dayjs from 'dayjs';
 import eChart from 'echarts/lib/echarts'
+import SelectDate from '@/components/statistics/SelectDate.vue';
 
 
-@Component
+@Component({
+  components: {SelectDate}
+})
 export default class myEchart extends mixins(listDepository) {
   @Prop(String) name: string | undefined;
   @Prop(String) eChartsType: string | undefined;
@@ -98,7 +100,7 @@ export default class myEchart extends mixins(listDepository) {
   getLineData(selected:boolean){
     let type = selected ? '-' : '+';
     let sum = 0
-    this.lineData = this.records.map((item: { items: any[]; createAt: any; })=>{
+    this.lineData = this.toMonthList.map((item: { items: any[]; createAt: any; })=>{
       sum = 0
       let a= item.items.filter(item=>
           item.types === type
@@ -219,7 +221,6 @@ export default class myEchart extends mixins(listDepository) {
 
   @Watch('date')
   onDate(){
-    console.log(this.toMonthList);
     this.getLineData(this.selected)
     this.drawChart();
   }
