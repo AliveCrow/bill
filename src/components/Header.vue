@@ -19,43 +19,38 @@
 import Vue from 'vue';
 import dayjs from 'dayjs';
 import {Component, Prop, Watch} from 'vue-property-decorator';
-import SelectDate from '@/components/statistics/SelectDate.vue';
+import SelectDate from '@/components/SelectDate.vue';
 import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
+import Moneybox from '@/mixins/Moneybox';
 @Component({
   components: {SelectDate}
 })
-export default class Header extends mixins(listDepository) {
+export default class Header extends mixins(listDepository,Moneybox) {
+
+
   selected: boolean = true;
   povit: string = '-';
-  date: string = dayjs().format('YYYY-MM');
+  date: string =  dayjs().format('YYYY-MM');
 
   billC(bool:boolean) {
     this.selected = bool;
     this.$emit('update:billyType', this.selected ? '月账单' : '年账单');
-
   }
-
   selectPayOrIncome(e:string) {
     this.povit = e;
     this.$emit('update:payOrIncome', e);
   }
-
-  created(){
-  }
-
-  @Watch('date')
+  @Watch('date',{immediate:true})
   onDate(){
     this.$emit('update:date',this.date)
   }
-
-
 
 };
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/var";
+@import "../../public/css/var";
 
 .header_nav {
   font-size: 1.1rem;

@@ -1,7 +1,7 @@
 <template>
-  <label for="start" class="header_input" >
-    <input type="month" id="start" name="start"
-           :min="minDate" :value="value" ref="year_month"
+  <label for="start" class="header_input" :class="labelClass" >
+    <input type="month" id="start" name="start" :class="inputClass"
+           :min="minDate" :value="val" ref="year_month"
            @change="selectDate"
     >
     <eva-icon name="chevron-down-outline" fill="#fff" class="icons"></eva-icon>
@@ -13,16 +13,22 @@ import {Component, Prop} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
+import Moneybox from '@/mixins/Moneybox';
 
 @Component
-export default class SelectDate extends mixins(listDepository) {
+export default class SelectDate extends mixins(listDepository,Moneybox) {
+  @Prop(String) labelClass:string |undefined;
+  @Prop(String) inputClass:string |undefined;
+
 
   minDate: string = '2001-01';
-  value: string = dayjs().format('YYYY-MM');
-
+  val:string;
+  created() {
+    this.val = this.date_YYYY_MM
+  }
 
   selectDate(e: any) {
-    this.value = e.target.value;
+    // this.dateYYYYMM = e.target.value;
     this.$emit('update:date', dayjs(e.target.value).format('YYYY-MM'));
   }
 
@@ -32,7 +38,7 @@ export default class SelectDate extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/var";
+@import "../../public/css/var";
 
 
 input[type='month']::-webkit-calendar-picker-indicator {
@@ -44,7 +50,24 @@ input[type='month']::-webkit-calendar-picker-indicator {
   left: 0;
   outline: none;
 }
+.inputClass{
+  line-height: 50px!important;
+  &::-webkit-calendar-picker-indicator {
+    background-image: none;
+    color: #666;
+    width: 100% !important;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: -30px!important;
+    outline: none;
+  }
+  &~.icons{
+    position: absolute;
+    top: 15px;
 
+  }
+}
 .icons {
   position: absolute;
   left: 105px;

@@ -12,7 +12,7 @@
 </template>
 
 <script lang='ts'>
-import HeaderMain from '@/components/statistics/HeaderMain.vue';
+import HeaderMain from '@/components/HeaderMain.vue';
 export default {
   components: {HeaderMain},
   props:['className'],

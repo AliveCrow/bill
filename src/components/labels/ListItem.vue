@@ -24,6 +24,7 @@ import box from '@/components/labels/box.vue';
 export default class ListItem extends Vue {
   @Prop(String) tag!: string;
   @Prop(Number) index!: number;
+
   tagName: string = this.tag;
   idName: string[] = ['label', 'edit'];
   input: any;

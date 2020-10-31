@@ -3,7 +3,7 @@
     <Header
         :billyType.sync="billyType"
         :payOrIncome.sync="payOrIncome"
-        :date.sync="date"
+        :date.sync="dateYYYYMM"
     />
     <Sum
         :payOrIncome="payOrIncome"
@@ -17,28 +17,22 @@
 
 import {Component, Watch} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
-import Header from '@/components/statistics/Header.vue';
-import Sum from '@/components/statistics/Sum.vue';
+import Header from '@/components/Header.vue';
+import Sum from '@/components/Sum.vue';
 import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
+import Moneybox from '@/mixins/Moneybox';
 
 @Component({
   name: 'HeaderMain',
   components: {Sum, Header}
 })
-export default class HeaderMain extends mixins(listDepository) {
+export default class HeaderMain extends mixins(listDepository, Moneybox) {
+  //todo type.3
   payOrIncome: string = '-';
   billyType: string = '月账单';
-  date: string = dayjs().format('YYYY-MM');
-
-  monthListObj: { list: [], date: string } = {
-    list: this.records,
-    date: this.date
-  };
-  payOrIncomeSelectObj: { date: string, payOrIncome: string } = {
-    date: this.date,
-    payOrIncome: this.payOrIncome
-  };
+  monthListObj: { list: [], date: string };
+  payOrIncomeSelectObj: { date: string, payOrIncome: string };
 
   init() {
     this.monthListObj.list = this.records;
@@ -48,13 +42,20 @@ export default class HeaderMain extends mixins(listDepository) {
   }
 
   created() {
+    this.monthListObj = {
+      list: this.records,
+      date: this.date_YYYY_MM
+    };
+    this.payOrIncomeSelectObj = {
+      date: this.date_YYYY_MM,
+      payOrIncome: this.payOrIncome
+    };
     this.init();
   }
 
   @Watch('primordialRecords')
-  onprimordialRecords(){
+  onprimordialRecords() {
     this.onBillyType();
-
   }
 
   @Watch('payOrIncome')
@@ -63,12 +64,12 @@ export default class HeaderMain extends mixins(listDepository) {
     this.onBillyType();
   }
 
-  @Watch('date')
+  @Watch('date_YYYY_MM')
   onDate() {
-    this.monthListObj.date = this.date;
-    this.payOrIncomeSelectObj.date = this.date;
+    this.monthListObj.date = this.date_YYYY_MM;
+    this.payOrIncomeSelectObj.date = this.date_YYYY_MM;
     this.init();
-    this.$store.commit('setDate', this.date);
+    this.$store.commit('setDate', this.date_YYYY_MM);
   }
 
   @Watch('billyType')
@@ -80,7 +81,7 @@ export default class HeaderMain extends mixins(listDepository) {
     let currentYearAllist: [] = [];
     let billy: number = 0;
     let total: number = 0;
-    let date = dayjs(this.date).format('YYYY');
+    let date = dayjs(this.date_YYYY_MM).format('YYYY');
 
     if (this.billyType === '年账单') {
       // @ts-ignore
@@ -122,7 +123,7 @@ export default class HeaderMain extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/var";
+@import "../../public/css/var";
 
 #header_main_app {
   height: 280px;

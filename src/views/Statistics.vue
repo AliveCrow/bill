@@ -12,7 +12,7 @@
 <script lang='ts'>
 import Types from '@/components/money/Types.vue';
 import StaticHeader from '@/components/statistics/StaticHeader.vue';
-import HeaderMain from '@/components/statistics/HeaderMain.vue';
+import HeaderMain from '@/components/HeaderMain.vue';
 
 export default {
   name: 'statistics',

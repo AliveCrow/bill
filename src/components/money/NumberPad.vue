@@ -10,9 +10,9 @@
         </div>
       </div>
       <div class="number_btn pad_right">
-        <div @click="del">删除</div>
-        <div @click="clear">清空</div>
-        <div class="ok" @click="confirm">/ok</div>
+        <div @click="del">Delete</div>
+        <div @click="clear">AC</div>
+        <div class="ok" @click="confirm">记一笔</div>
       </div>
     </div>
   </div>
@@ -45,6 +45,7 @@ export default class numberPag extends Vue {
         return;
       }
       if (this.insert === "0") {
+        // @ts-ignore
         if (/^[0-9]\d*$/.test(parseInt(input))) {
           this.insert = input;
         } else {
@@ -58,20 +59,16 @@ export default class numberPag extends Vue {
       this.insert += input;
     }
   }
-
   del() {
     if (this.insert.length === 1) {
       this.insert = '0';
     } else {
       this.insert = this.insert.slice(0, -1);
     }
-
   }
-
   clear() {
     this.insert = '0';
   }
-
   confirm() {
     this.$emit('update:value', parseFloat(this.insert));
     this.$emit('submit');
@@ -99,23 +96,25 @@ export default class numberPag extends Vue {
     flex-direction: row;
     .number_btn {
       flex-grow: 1;
+      display: flex;
       div {
+        border-radius: 3px;
         height: 70px;
         line-height: 70px;
         text-align: center;
-        background-color: rgba($navBgColor,.3);
+        background-color: rgba($navBgColor,.4);
       }
     }
 
     .pad_left {
-      display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       flex-grow: 3;
-      .num{
+      >.num{
+        font-size: 1.2rem;
         flex-grow: 1;
         flex-basis: 30%;
-        margin: 0 5px 5px;
+        margin: 0 0 5px 5px;
         &:focus{
           background-color: red;
         }
@@ -127,7 +126,15 @@ export default class numberPag extends Vue {
       flex-direction: column;
       flex-grow: 1;
       div{
-        margin: 0 5px 5px;
+        &:nth-child(1){
+          background-color: rgba($Danger,.8);
+        }
+        &:nth-child(2){
+          background-color: rgba($Waring,.8);
+        }
+        color: #fff;
+        background-color: rgba($selectedColor,.9);
+        margin: 0 5px 5px 5px;
       }
       > .ok {
         line-height: 140px;

@@ -2,15 +2,15 @@
   <nav>
     <router-link active-class="selected" class="router_link" to="/money">
       <Icon idName="money" />
-      Money
+      账单
     </router-link>
     <router-link active-class="selected" class="router_link" to="/labels">
       <Icon idName="label" />
-      Labels
+      标签
     </router-link>
     <router-link active-class="selected" class="router_link" to="/statistics">
       <Icon idName="statistics" />
-      Statistics
+      统计
     </router-link>
   </nav>
 </template>

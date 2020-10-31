@@ -25,16 +25,18 @@ import listDepository from '@/mixins/listDepository';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 import dayjs from 'dayjs';
 import eChart from 'echarts/lib/echarts'
-import SelectDate from '@/components/statistics/SelectDate.vue';
+import SelectDate from '@/components/SelectDate.vue';
+import Moneybox from '@/mixins/Moneybox';
 
 
 @Component({
   components: {SelectDate}
 })
-export default class myEchart extends mixins(listDepository) {
+export default class myEchart extends mixins(listDepository,Moneybox) {
   @Prop(String) name: string | undefined;
   @Prop(String) eChartsType: string | undefined;
   @Prop(String) replaceWith:string | undefined;
+
   @Prop(String) date:string | undefined;
 
   key1:number = 11;
@@ -79,6 +81,7 @@ export default class myEchart extends mixins(listDepository) {
         && item.types === type
     );
   }
+
   getEchartData() {
     this.newArr = this.tagsToday.map(item => {
       return {
@@ -97,6 +100,8 @@ export default class myEchart extends mixins(listDepository) {
 
   //line
   getLineData(selected:boolean){
+    console.log(this.date);
+    this.$store.commit('billyStore/MonthList', { list:this.records, date: dayjs(this.date).format('YYYY-MM') });
     let type = selected ? '-' : '+';
     let sum = 0
     this.lineData = this.toMonthList.map((item: { items: any[]; createAt: any; })=>{
@@ -191,6 +196,7 @@ export default class myEchart extends mixins(listDepository) {
       myChart.setOption(option);
     }
   }
+
 
   mounted() {
     if(this.eChartsType === 'line'){

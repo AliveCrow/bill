@@ -13,8 +13,8 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class Types extends Vue {
   @Prop(String) value: string | undefined;
-  type = this.value
 
+  type = this.value
   selectType(type: string) {
     if (type !== '-' && type !== '+') {
       throw new Error('type is unknown');
