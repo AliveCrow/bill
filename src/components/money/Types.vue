@@ -35,11 +35,12 @@ ul {
     flex-grow: 1;
     padding: 10px 20px;
     font-size: 1.4rem;
-    background-color: $navBgColor;
+    background-color: rgba($navBgColor,.4);
   }
 
   .selected {
-    color: $selectedColor;
+    color: $whiteColor;
+    background-color: $selectedColor;
     //border-bottom: 3px solid $selectedColor;
     position: relative;
     overflow: hidden;

@@ -8,11 +8,12 @@
 <script lang='ts'>
 
 import Vue from 'vue'
-import {Component, Prop, PropSync} from 'vue-property-decorator';
+import {Component, Prop, PropSync, Watch} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import listDepository from '@/mixins/listDepository';
 
 @Component
 export default class Sum extends Vue{
-
 
   @PropSync('payOrIncome', { type: String }) syncedpayOrIncome:string | undefined;
   @PropSync('total', { type: Number }) syncedtotal:number | undefined;
@@ -20,7 +21,6 @@ export default class Sum extends Vue{
 
 
 }
-
 
 
 </script>

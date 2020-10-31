@@ -20,10 +20,12 @@ import Vue from 'vue';
 import dayjs from 'dayjs';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 import SelectDate from '@/components/statistics/SelectDate.vue';
+import {mixins} from 'vue-class-component';
+import listDepository from '@/mixins/listDepository';
 @Component({
   components: {SelectDate}
 })
-export default class Header extends Vue {
+export default class Header extends mixins(listDepository) {
   selected: boolean = true;
   povit: string = '-';
   date: string = dayjs().format('YYYY-MM');
@@ -46,6 +48,8 @@ export default class Header extends Vue {
   onDate(){
     this.$emit('update:date',this.date)
   }
+
+
 
 };
 </script>

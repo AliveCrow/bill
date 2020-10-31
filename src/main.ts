@@ -11,6 +11,7 @@ import Tag from "@/components/money/Tag.vue";
 import EvaIcons from 'vue-eva-icons';
 // @ts-ignore
 import echarts from 'echarts'
+import Message from '@/components/Message.vue';
 
 
 
@@ -26,7 +27,7 @@ Vue.component('Nav',Nav)
 Vue.component('Layout',Layout)
 Vue.component('Icon',Icon)
 Vue.component('Tag',Tag)
-
+Vue.component('Message',Message)
 
 
 new Vue({

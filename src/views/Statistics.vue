@@ -1,7 +1,10 @@
 <template>
   <div>
     <Layout>
-      <StaticHeader  />
+      <HeaderMain  />
+      <div  class="billy_box">
+          <StaticHeader  />
+      </div>
     </Layout>
   </div>
 </template>
@@ -17,12 +20,18 @@ export default {
     HeaderMain,
     StaticHeader,
     Types,
-  }
+  },
 };
 </script>
 
 <style scoped lang='scss'>
 @import "public/css/var";
 
+.billy_box{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: #fff;
+  margin-top: -30px;
+}
 
 </style>

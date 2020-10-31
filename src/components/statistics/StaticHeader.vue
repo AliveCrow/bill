@@ -3,7 +3,6 @@
     <div class="container">
       <Echart name="每日统计" eChartsType="pie" replaceWith="今天没有记录"/>
       <Echart name="每月统计" eChartsType="line" replaceWith="本月没有记录" :date="date"/>
-      <InfoList :date="date"/>
     </div>
   </div>
 

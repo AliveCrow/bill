@@ -27,7 +27,7 @@ nav {
   box-shadow: 0 0 3px rgba(#000, .3);
   display: flex;
   flex-direction: row;
-  background-color: $navBgColor;
+  background-color: $whiteColor;
   position: relative;
   z-index: 99;
   .router_link {

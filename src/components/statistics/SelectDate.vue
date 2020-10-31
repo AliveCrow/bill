@@ -1,5 +1,5 @@
 <template>
-  <label for="start" class="header_input">
+  <label for="start" class="header_input" >
     <input type="month" id="start" name="start"
            :min="minDate" :value="value" ref="year_month"
            @change="selectDate"
@@ -9,7 +9,7 @@
 </template>
 
 <script lang='ts'>
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
@@ -64,7 +64,7 @@ input[type='month'] {
   border: none;
   background-color: #fff0;
   color: #fff;
-
 }
+
 
 </style>

@@ -31,6 +31,8 @@ export default class Label  extends mixins(listDepository) {
     this.edit = document.querySelectorAll('.edit')
   }
 
+
+
 }
 
 

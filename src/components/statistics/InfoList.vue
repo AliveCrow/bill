@@ -17,7 +17,7 @@
 
 <script lang='ts'>
 import Vue from 'vue'
-import {Component, Prop} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
@@ -32,11 +32,9 @@ export default class InfoList extends mixins(listDepository){
   sum: [] | undefined;
 
   created() {
-    let list = this.toMonthList.map((item: { items: any[]; })=> {
-      return item.items.filter(res => res.types === '-')
-    })
-
+    console.log(this.toMonthList);
   }
+
   getSum(items: any[], type: any){
     let sum =0
     let x = items.filter(item=>item.types === type)
@@ -45,6 +43,9 @@ export default class InfoList extends mixins(listDepository){
     })
     return sum
   }
+
+
+
 
 }
 
@@ -56,8 +57,6 @@ export default class InfoList extends mixins(listDepository){
 
 .into_list {
   .into_list_date {
-    box-shadow: 0 1px 0 rgba(#000,.2);
-    //background-color: rgba($navBgColor,.3);
     > p:nth-child(1) {
       font-size: 1.5rem;
       text-align: left;
@@ -79,7 +78,6 @@ export default class InfoList extends mixins(listDepository){
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    box-shadow: 0 1px 0 rgba(#000,.2);
 
     span {
       margin: 0 20px;

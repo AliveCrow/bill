@@ -1,16 +1,12 @@
 <template>
   <div id="app">
-    <router-view/>
+      <router-view style="height: 100%;overflow-y: auto" />
+    <Nav />
   </div>
 </template>
 <script>
-import Header from "@/components/statistics/Header";
-import Sum from "@/components/statistics/Sum";
-import dayjs from "dayjs";
-import HeaderMain from "@/components/statistics/HeaderMain";
 
 export default {
-  components: {HeaderMain, Sum, Header},
 }
 </script>
 <style lang="scss">
@@ -27,7 +23,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: $fontColor;
   line-height: 1.5;
-
+  overflow-y:hidden;
   ::-webkit-scrollbar {
     width: 0;
   }
@@ -41,6 +37,8 @@ body {
   color: #2c3e50;
   height: 100vh;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .icon {

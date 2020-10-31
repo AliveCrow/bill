@@ -23,13 +23,13 @@ import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
 
 @Component({
+  name: 'HeaderMain',
   components: {Sum, Header}
 })
 export default class HeaderMain extends mixins(listDepository) {
   payOrIncome: string = '-';
   billyType: string = '月账单';
   date: string = dayjs().format('YYYY-MM');
-
 
   monthListObj: { list: [], date: string } = {
     list: this.records,
@@ -39,30 +39,38 @@ export default class HeaderMain extends mixins(listDepository) {
     date: this.date,
     payOrIncome: this.payOrIncome
   };
+
   init() {
     this.monthListObj.list = this.records;
     this.$store.commit('billyStore/reset');
     this.$store.commit('billyStore/MonthList', this.monthListObj);
     this.$store.commit('billyStore/payOrIncomeSelect', this.payOrIncomeSelectObj);
   }
+
   created() {
     this.init();
   }
-  updated(){
-    console.log(this.billy,this.total);
+
+  @Watch('primordialRecords')
+  onprimordialRecords(){
+    this.onBillyType();
+
   }
+
   @Watch('payOrIncome')
   onPayOrIncome() {
     this.payOrIncomeSelectObj.payOrIncome = this.payOrIncome;
-    this.onBillyType()
+    this.onBillyType();
   }
+
   @Watch('date')
   onDate() {
     this.monthListObj.date = this.date;
     this.payOrIncomeSelectObj.date = this.date;
     this.init();
-    this.$store.commit('setDate',this.date)
+    this.$store.commit('setDate', this.date);
   }
+
   @Watch('billyType')
   onBillyType() {
     //todo 优化-使用展开运算符看看?
@@ -83,19 +91,19 @@ export default class HeaderMain extends mixins(listDepository) {
       currentYear = includeCurrentYear.map(item => {
         return item.items;
       });
-      let a: any[] = []
-      let x = currentYear.forEach((item: any[])=>{
-        item.forEach(item=>{
-          if(item.types === this.payOrIncome){
-            a.push(item)
+      let a: any[] = [];
+      let x = currentYear.forEach((item: any[]) => {
+        item.forEach(item => {
+          if (item.types === this.payOrIncome) {
+            a.push(item);
           }
-        })
-      })
+        });
+      });
       for (let i = 0; i < a.length; i++) {
         // @ts-ignore
         currentYearAllist = a.map(item => {
           return item;
-        })
+        });
       }
       total = a.length;
       currentYearAllist.forEach(item => {
@@ -123,6 +131,7 @@ export default class HeaderMain extends mixins(listDepository) {
   padding-top: 50px;
   display: flex;
   flex-direction: column;
+
   .header_nav {
     font-size: 1.1rem;
     margin-bottom: 20px;

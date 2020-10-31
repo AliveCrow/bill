@@ -5,7 +5,9 @@
     </div>
     <div class="pad">
       <div class="number_btn pad_left">
-        <div @click="insertNum" class="num" v-for="(num,index) in numData" :key="index">{{ num }}</div>
+        <div @click="insertNum" class="num" v-for="(num,index) in numData" :key="index">
+            {{num}}
+        </div>
       </div>
       <div class="number_btn pad_right">
         <div @click="del">删除</div>
@@ -27,22 +29,23 @@ import Types from '@/components/money/Types.vue';
   components: {Types}
 })
 export default class numberPag extends Vue {
-  @Prop(Number) value!: number;
+  // @Prop(Number) value!: number;
+
   numData = [
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'
   ];
-  insert = this.value.toString()
+  insert = '0'
 
   insertNum(event: MouseEvent) {
     if (event.target) {
       const button = event.target as HTMLButtonElement;
-      const input = button.textContent!;
+      const input = button.textContent!.trim();
       if (this.insert.length >= 16) {
         //弹出提示框
         return;
       }
       if (this.insert === "0") {
-        if (/^[0-9]\d*$/.test(input)) {
+        if (/^[0-9]\d*$/.test(parseInt(input))) {
           this.insert = input;
         } else {
           this.insert += input;
@@ -57,7 +60,6 @@ export default class numberPag extends Vue {
   }
 
   del() {
-    // console.log(this.insert.slice(1, -1));
     if (this.insert.length === 1) {
       this.insert = '0';
     } else {
@@ -85,7 +87,6 @@ export default class numberPag extends Vue {
 #number_pad {
   display: flex;
   flex-direction: column;
-
   .number {
     height: 70px;
     line-height: 70px;
@@ -93,21 +94,16 @@ export default class numberPag extends Vue {
     padding: 5px 10px;
     font-size: 2.4em;
   }
-
   .pad {
     display: flex;
     flex-direction: row;
-
     .number_btn {
       flex-grow: 1;
-
       div {
         height: 70px;
         line-height: 70px;
         text-align: center;
-        background-color: $navBgColor;
-        border-top: 1px solid $fontColor;
-        border-right: 1px solid $fontColor;
+        background-color: rgba($navBgColor,.3);
       }
     }
 
@@ -116,19 +112,13 @@ export default class numberPag extends Vue {
       flex-direction: row;
       flex-wrap: wrap;
       flex-grow: 3;
-
-      & > div {
-        flex-basis: 33.333333%;
+      .num{
         flex-grow: 1;
-      }
-
-      .num:nth-last-child(2) {
-        flex-grow: 9999;
-        text-align: center;
-      }
-
-      .num:nth-last-child(1) {
-        flex-grow: 1;
+        flex-basis: 30%;
+        margin: 0 5px 5px;
+        &:focus{
+          background-color: red;
+        }
       }
     }
 
@@ -136,7 +126,9 @@ export default class numberPag extends Vue {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-
+      div{
+        margin: 0 5px 5px;
+      }
       > .ok {
         line-height: 140px;
         flex-grow: 2;

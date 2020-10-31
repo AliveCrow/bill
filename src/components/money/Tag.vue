@@ -1,5 +1,8 @@
 <template>
   <div class="tags" ref="tags">
+    <Message :type="msg_type" ref="msg" v-show="msg_show">
+      {{ msg }}
+    </Message>
     <div class="tags_box" >
       <div v-for="(item,index) in tags" @click="toggle(item);"
            class="tag" :class="{selected:selectedTags.indexOf(item)>=0}"
@@ -30,12 +33,14 @@ export default class Tag extends mixins(listDepository) {
   @Prop(Array) readonly tagsSource!: string[];
   @Prop(Array) readonly  selectedTags!: string[];
 
-  el :Element = '<Message message="123"  type="info">'
+  msg: string = '';
+  msg_type: string = '';
+  msg_show: boolean = false;
 
   toggle(tag: string ) {
     const index = this.selectedTags.indexOf(tag);
     if(this.selectedTags.length !== 0 && index < 0){
-      alert('只能选择一个标签')
+      this.showMsg('只能选择一个标签','Waring')
     }else {
       if (index >= 0) {
         this.selectedTags.splice(index, 1);
@@ -46,6 +51,14 @@ export default class Tag extends mixins(listDepository) {
     }
   }
 
+  showMsg(msg: string, msg_type: string) {
+    this.msg_show = true;
+    this.msg = msg;
+    this.msg_type = msg_type;
+    setTimeout(() => {
+      this.msg_show = false;
+    }, 800);
+  }
   create() {
     const text = prompt('请输入要添加的标签名称');
     if (text) {
@@ -54,7 +67,6 @@ export default class Tag extends mixins(listDepository) {
       return;
     }
   }
-
 
 }
 </script>
