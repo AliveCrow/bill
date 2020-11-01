@@ -24,17 +24,17 @@ const tagsStore = {
             if (list.length !== 0) {
                 // @ts-ignore
                 // alert('已有同名标签');
-                return 'duplicated';
+                // return 'duplicated';
             } else if (value === '') {
                 // alert('标签不能为空');
-                return 'tag is empty';
+                // return 'tag is empty';
             } else {
                 let id = createId();
                 // @ts-ignore
                 state.tagsDataSource.push({id: id, name: value});
                 localStorage.setItem('idMax', id.toString());
                 localStorage.setItem(state.tagsListName, JSON.stringify(state.tagsDataSource));
-                return 'success';
+                // return 'success';
             }
         },
         tagsUpdate: function (state:storeTags, args: { index: number, tagName: string }) {

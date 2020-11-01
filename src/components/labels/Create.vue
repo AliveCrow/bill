@@ -1,8 +1,7 @@
 <template>
   <box>
-
     <Icon idName="label" className="icon_label label"/>
-    <label class="label_item_name">
+    <label class="label_item_name" >
       <input placeholder="创建新标签" type="text" v-model="text" class="label_item_input"/>
     </label>
     <Icon idName="create" className="icon_label edit" @click.native="create_tag" />
@@ -10,7 +9,6 @@
 </template>
 
 <script lang='ts'>
-import Vue from 'vue';
 import box from '@/components/labels/box.vue';
 import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
@@ -20,14 +18,15 @@ import listDepository from '@/mixins/listDepository';
   components: {box,},
 })
 export default class Label  extends mixins(listDepository){
-
   text: string= ''
-
   create_tag() {
-    let ret = this.$store.commit('tagsStore/tagsSetter', this.text)
-    if (!ret) {
-      this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', '$Danger')
+    if(this.checkTag(this.text)){
+      this.$store.commit('tagsStore/tagsSetter', this.text);
+    }else {
+      this.$emit('update:isError',true)
     }
+
+    this.clearInput()
   }
   clearInput(){
     this.text = ''

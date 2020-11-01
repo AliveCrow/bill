@@ -1,8 +1,8 @@
 <template>
   <div>
     <Layout>
-      <HeaderMain  />
-      <div  class="billy_box">
+      <HeaderMain key="1201"  />
+      <div key="1202"  class="billy_box">
           <StaticHeader  />
       </div>
     </Layout>

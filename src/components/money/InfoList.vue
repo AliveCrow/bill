@@ -1,6 +1,6 @@
 <template>
   <div class="into_list" :key="getDate">
-    <blockquote v-for="date in monthList" :key="date.index">
+    <blockquote v-for="(date,index) in monthList" :key="index">
       <div class="into_list_date">
         <p>{{ date.createAt }}</p>
         <p style="color:#F56C6C">支出{{ getSum (date.items, '-') }},<span
@@ -116,5 +116,6 @@ export default class InfoList extends mixins(listDepository) {
 
   }
 }
+
 
 </style>

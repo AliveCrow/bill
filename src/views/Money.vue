@@ -1,17 +1,17 @@
 <template>
   <div id="money">
-    <Message :type="msg_type" ref="msg" v-show="msg_show">
-      {{ msg }}
-    </Message>
+
     <Layout className="layout_one" ref="layout_one">
-      <HeaderMain/>
-      <div class="billy_box">
+      <HeaderMain key="1001" />
+      <div  key="1002"  class="billy_box">
         <span class="title">月账单</span>
         <div class="info_box">
+          <transition name="toggle_ani">
           <InfoList :date="date" :key="uns2"/>
+          </transition>
         </div>
       </div>
-      <eva-icon name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
+      <eva-icon  key="1003" name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
                 @click="showNumPad"></eva-icon>
     </Layout>
     <div class="money_box go go_bottom" ref="NumPad">
@@ -31,7 +31,10 @@
         <span>备注:</span>
         <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
       </label>
-      <Tag :selectedTags.sync="recordListItem.tags" :key="uns3"/>
+      <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"  />
+      <Message :type="msg_type" ref="msg" v-show="msg_show">
+        {{ msg }}
+      </Message>
     </div>
   </div>
 </template>
@@ -62,6 +65,8 @@ export default class Money extends mixins(listDepository) {
   uns1: number = 1;
   uns2: number = 2;
   uns3: number = 3;
+  isError:boolean = false;
+  msg_show:boolean = false;
 
   mounted() {
     // @ts-ignore
@@ -72,8 +77,6 @@ export default class Money extends mixins(listDepository) {
   getTags(list: string[]) {
     this.recordListItem.tags = list;
   }
-
-  //todo bug 新增后账单列表不会更新
 
   getType(type: string) {
     this.recordListItem.types = type;
@@ -141,11 +144,31 @@ export default class Money extends mixins(listDepository) {
     }, 400);
 
   }
+
+  @Watch('isError')
+  onch(){
+    if(this.isError){
+      this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', 'Danger')
+      setTimeout(() => {
+        this.msg_show = false;
+        this.isError = false
+      }, 1500);
+    }
+  }
 }
 </script>
 
 <style scoped lang='scss'>
 @import "../assets/scss/css/var";
+.toggle_ani-enter-active,
+.toggle_ani-leave-active {
+  transition: opacity .3s;
+}
+
+.toggle_ani-enter,
+.toggle_ani-leave-active {
+  opacity: 0;
+}
 .icons {
   background-color: rgba($whiteColor, 1);
   box-shadow: 0 0 10px rgba(#000, .2);

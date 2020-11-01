@@ -1,17 +1,16 @@
 <template>
   <div class="tags" ref="tags">
-    <Message :type="msg_type" ref="msg" v-show="msg_show">
-      {{ msg }}
-    </Message>
-    <div class="tags_box" >
-      <div v-for="(item,index) in tags" @click="toggle(item);"
-           class="tag" :class="{selected:selectedTags.indexOf(item)>=0}"
-           :name="item" :key="index"
-      >
+    <div class="tags_box">
+      <transition-group name="list" tag="p">
+        <div v-for="(item,index) in tags" @click="toggle(item);"
+             class="tag" :class="{selected:selectedTags.indexOf(item)>=0}"
+             :name="item" :key="index" style="display: inline-block"
+        >
   <span>
     {{ item.name }}
   </span>
-      </div>
+        </div>
+      </transition-group>
       <Icon @iconToggle="create" className="tag add" idName="add"/>
     </div>
   </div>
@@ -22,7 +21,7 @@
 import Icon from '@/components/Icon.vue';
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
-import { mixins } from 'vue-class-component'
+import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
 
 
@@ -31,14 +30,14 @@ import listDepository from '@/mixins/listDepository';
 })
 export default class Tag extends mixins(listDepository) {
   @Prop(Array) readonly tagsSource!: string[];
-  @Prop(Array) readonly  selectedTags!: string[];
+  @Prop(Array) readonly selectedTags!: string[];
 
 
-  toggle(tag: string ) {
+  toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
-    if(this.selectedTags.length !== 0 && index < 0){
-      this.showMsg('只能选择一个标签','Waring')
-    }else {
+    if (this.selectedTags.length !== 0 && index < 0) {
+      this.showMsg('只能选择一个标签', 'Waring');
+    } else {
       if (index >= 0) {
         this.selectedTags.splice(index, 1);
       } else {
@@ -51,11 +50,12 @@ export default class Tag extends mixins(listDepository) {
 
   create() {
     const text = prompt('请输入要添加的标签名称');
-    if (text) {
-      this.$store.commit('tagsStore/tagsSetter',text)
-    } else {
-      return;
+    if(this.checkTag(text)){
+      this.$store.commit('tagsStore/tagsSetter', text);
+    }else {
+      this.$emit('update:isError',true)
     }
+
   }
 
 }
@@ -63,6 +63,15 @@ export default class Tag extends mixins(listDepository) {
 
 <style scoped lang='scss'>
 @import "../../assets/scss/css/var";
+
+.list-enter-active, .list-leave-active {
+  transition: all .35s ease .1s;
+}
+
+.list-enter, .list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
 
 .tags {
   text-align: left;

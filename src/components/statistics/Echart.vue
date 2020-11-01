@@ -210,7 +210,6 @@ export default class myEchart extends mixins(listDepository) {
   mounted() {
     if(this.eChartsType === 'line'){
       this.getLineData(this.selected)
-      console.log(this.lineData);
 
     }else {
      this.reGetPie()

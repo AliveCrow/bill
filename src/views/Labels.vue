@@ -4,20 +4,22 @@
       {{ msg }}
     </Message>
     <Layout className="label_page">
-      <div class="modify">
+      <div class="modify"  key="1101">
         修改标签
       </div>
-      <div class="labels_box">
+      <div class="labels_box" key="1102">
 <!--        创建新标签-->
-        <Create  />
+        <Create key="1103" :isError.sync="isError"  />
+        <transition-group name="list" tag="p">
         <ListItem  v-for="(tag,index) in tags" :tag="tag.name" :index="index" :key="index" />
+        </transition-group>
       </div>
     </Layout>
   </div>
 </template>
 
 <script lang='ts'>
-import {Component} from 'vue-property-decorator';
+import {Component, Watch} from 'vue-property-decorator';
 import Create from '@/components/labels/Create.vue';
 import ListItem from '@/components/labels/ListItem.vue';
 import listDepository from '@/mixins/listDepository';
@@ -26,14 +28,23 @@ import {mixins} from 'vue-class-component';
   components: {ListItem, Create}
 })
 export default class Label  extends mixins(listDepository) {
-  input:any;edit:any;
+  input:any;edit:any;isError:boolean=false;msg_show:boolean = false;
 
   mounted(){
     this.input = document.querySelectorAll('.tag_input')
     this.edit = document.querySelectorAll('.edit')
   }
 
-
+  @Watch('isError')
+  onch(){
+    if(this.isError){
+      this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', 'Danger')
+      setTimeout(() => {
+        this.msg_show = false;
+        this.isError = false
+      }, 1500);
+    }
+  }
 
 }
 
@@ -42,6 +53,18 @@ export default class Label  extends mixins(listDepository) {
 
 <style scoped lang='scss'>
 @import '../assets/scss/css/var';
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  transition: all .35s ease .1s;
+}
+.list-enter, .list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 
 .label_page {
   .modify {
