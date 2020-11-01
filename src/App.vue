@@ -1,12 +1,23 @@
 <template>
   <div id="app">
       <router-view style="height: 100%;overflow-y: auto" />
-    <Nav />
+    <Nav v-show="!(name ==='NotFound')" />
+
   </div>
 </template>
 <script>
 
 export default {
+
+  data(){
+    return {
+      name:''
+    }
+  },
+  created() {
+    this.name = this.$route.name
+  }
+
 }
 </script>
 <style lang="scss">

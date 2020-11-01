@@ -1,14 +1,13 @@
 <template>
-  <div class="money_app">
-    <div id="content" >
-      <div class="main" :class="className" ref="Layout">
-        <div class="main_slot">
-          <slot></slot>
+    <div class="money_app">
+      <div id="content" >
+        <div class="main" :class="className" ref="Layout">
+          <div class="main_slot">
+            <slot></slot>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
 </template>
 
 <script lang='ts'>

@@ -9,7 +9,6 @@
         <Create />
         <ListItem  v-for="(tag,index) in tags" :tag="tag.name" :index="index" :key="tag.id" />
       </div>
-
     </Layout>
   </div>
 </template>
