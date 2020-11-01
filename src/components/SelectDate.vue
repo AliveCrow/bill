@@ -12,24 +12,21 @@
 import {Component, Prop} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
-import dayjs from 'dayjs';
-import Moneybox from '@/mixins/Moneybox';
 
 @Component
-export default class SelectDate extends mixins(listDepository,Moneybox) {
+export default class SelectDate extends mixins(listDepository) {
   @Prop(String) labelClass:string |undefined;
   @Prop(String) inputClass:string |undefined;
 
-
   minDate: string = '2001-01';
-  val:string;
+  val:string = '';
+
   created() {
-    this.val = this.date_YYYY_MM
+    this.val = this.setDate('')('YYYY-MM')
   }
 
   selectDate(e: any) {
-    // this.dateYYYYMM = e.target.value;
-    this.$emit('update:date', dayjs(e.target.value).format('YYYY-MM'));
+    this.$emit('update:date', this.setDate(e.target.value)('YYYY-MM'));
   }
 
 }

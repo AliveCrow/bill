@@ -5,14 +5,14 @@
     </div>
     <div class="pad">
       <div class="number_btn pad_left">
-        <div @click="insertNum" class="num" v-for="(num,index) in numData" :key="index">
+        <div @click="insertNum" ref="pad_btn" class="num" v-for="(num,index) in numData" :key="index">
             {{num}}
         </div>
       </div>
-      <div class="number_btn pad_right">
-        <div @click="del">Delete</div>
-        <div @click="clear">AC</div>
-        <div class="ok" @click="confirm">记一笔</div>
+      <div class="number_btn pad_right" ref="pad_btn_right">
+        <div  @click="del">Delete</div>
+        <div  @click="clear">AC</div>
+        <div  class="ok" @click="confirm">记一笔</div>
       </div>
     </div>
   </div>
@@ -73,6 +73,30 @@ export default class numberPag extends Vue {
     this.$emit('update:value', parseFloat(this.insert));
     this.$emit('submit');
     this.insert = '0';
+  }
+
+  addAni(arr){
+    arr.forEach(item=>{
+      item.addEventListener('touchstart',function (e){
+        this.style.backgroundColor = 'rgba(238,238,238,.8)'
+      })
+      item.addEventListener('touchend',function (e){
+        this.style.backgroundColor = 'rgba(238,238,238,.4)'
+      })
+    })
+  }
+
+
+  mounted(){
+    this.addAni(this.$refs.pad_btn);
+    this.$refs.pad_btn_right.children.forEach(item=>{
+          item.addEventListener('touchstart',function (e){
+            this.style.opacity = '.8'
+          })
+          item.addEventListener('touchend',function (e){
+            this.style.opacity = '1'
+          })
+        })
   }
 
 }

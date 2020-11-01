@@ -7,33 +7,64 @@ import dayjs from 'dayjs';
 export default class listDepository extends Vue {
     //@ts-ignore
     $store
+    msg: string = '';
+    msg_type: string = '';
+    msg_show: boolean = false;
+
+    created(){
+        this.$store.commit(('recordStore/recordListgetter'),('setDate')) //获取数据,初始化时间
+    }
+
+    showMsg(msg: string, msg_type: string) {
+        this.msg_show = true;
+        this.msg = msg;
+        this.msg_type = msg_type;
+        setTimeout(() => {
+            this.msg_show = false;
+        }, 800);
+    }
+
+
+    get getDate(){
+        return this.$store.state.date
+    }
+
+    setDate(date:string,change_source:boolean=true){
+        if(change_source){
+            this.$store.commit('setDate',date)
+        }
+        return this.$store.getters['getDate']
+    }
+
     get tags(){
         this.$store.commit('tagsStore/tagsGetter')
         return this.$store.state.tagsStore.tagsDataSource
     }
 
+    //列出没处理过的所有账单=>[{tags, remark, types, num, createAt}]
     get primordialRecords(){
         return this.$store.state.recordStore.recordLists
     }
 
-    //
+    //hash化所有账单=>[{createAt,items}]
     get records(){
         return this.$store.getters['recordStore/setGroupings']
     }
 
-    //账单
+    //选择月账单=>[{tags, remark, types, num, createAt}]
     get toMonthList(){
-        return  this.$store.state.billyStore.toMonthList
-    }
-    get total(){
-        return  this.$store.state.billyStore.total
-    }
-    get billy(){
-        return  this.$store.state.billyStore.billy
+        return this.$store.getters['recordStore/getMonList']
     }
 
-    created(){
-        this.$store.commit('recordStore/recordListgetter')
+
+    get num(){
+        return this.$store.getters['recordStore/payOrIncomeSelect']
     }
+
+
+
+
+
+
 
 }

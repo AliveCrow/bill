@@ -22,11 +22,10 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 import SelectDate from '@/components/SelectDate.vue';
 import {mixins} from 'vue-class-component';
 import listDepository from '@/mixins/listDepository';
-import Moneybox from '@/mixins/Moneybox';
 @Component({
   components: {SelectDate}
 })
-export default class Header extends mixins(listDepository,Moneybox) {
+export default class Header extends mixins(listDepository) {
 
 
   selected: boolean = true;

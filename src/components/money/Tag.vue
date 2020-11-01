@@ -24,13 +24,12 @@ import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import { mixins } from 'vue-class-component'
 import listDepository from '@/mixins/listDepository';
-import Moneybox from '@/mixins/Moneybox';
 
 
 @Component({
   components: {'Icon': Icon}
 })
-export default class Tag extends mixins(listDepository,Moneybox) {
+export default class Tag extends mixins(listDepository) {
   @Prop(Array) readonly tagsSource!: string[];
   @Prop(Array) readonly  selectedTags!: string[];
 
@@ -45,9 +44,10 @@ export default class Tag extends mixins(listDepository,Moneybox) {
       } else {
         this.selectedTags.push(tag);
       }
-      this.$emit('exposeTags', this.selectedTags);
     }
+    this.$emit('update:selectedTags', this.selectedTags);
   }
+
 
   create() {
     const text = prompt('请输入要添加的标签名称');

@@ -7,7 +7,7 @@
         <button :class="{selected:!selected}" @click="change(false)">收入</button>
       </div>
     </div>
-    <div class="echarts" v-if="eChartsType==='line'?lineData.length!==0:newArr.length!==0" :key="key1">
+    <div class="echarts" v-if="eChartsType==='line'?lineSum!==0:newArr.length!==0" :key="key1">
       <div id="main" ref="container" style="width: 100%;height:480px">
       </div>
     </div>
@@ -26,17 +26,15 @@ import {Component, Prop, Watch} from 'vue-property-decorator';
 import dayjs from 'dayjs';
 import eChart from 'echarts/lib/echarts'
 import SelectDate from '@/components/SelectDate.vue';
-import Moneybox from '@/mixins/Moneybox';
 
 
 @Component({
   components: {SelectDate}
 })
-export default class myEchart extends mixins(listDepository,Moneybox) {
+export default class myEchart extends mixins(listDepository) {
   @Prop(String) name: string | undefined;
   @Prop(String) eChartsType: string | undefined;
   @Prop(String) replaceWith:string | undefined;
-
   @Prop(String) date:string | undefined;
 
   key1:number = 11;
@@ -49,11 +47,11 @@ export default class myEchart extends mixins(listDepository,Moneybox) {
   newArr: any[] = [];   //echarts数据
   //line
   lineData: any[] = [];
+  lineSum:number = 0;
 
   change(bool: boolean) {
     this.selected = bool;
   }
-
 
   //pie
   getTagsToday(selected: boolean) {
@@ -81,7 +79,6 @@ export default class myEchart extends mixins(listDepository,Moneybox) {
         && item.types === type
     );
   }
-
   getEchartData() {
     this.newArr = this.tagsToday.map(item => {
       return {
@@ -98,30 +95,22 @@ export default class myEchart extends mixins(listDepository,Moneybox) {
     }
   }
 
+
   //line
   getLineData(selected:boolean){
-    console.log(this.date);
-    this.$store.commit('billyStore/MonthList', { list:this.records, date: dayjs(this.date).format('YYYY-MM') });
+    this.lineSum = 0
     let type = selected ? '-' : '+';
-    let sum = 0
-    this.lineData = this.toMonthList.map((item: { items: any[]; createAt: any; })=>{
-      sum = 0
-      let a= item.items.filter(item=>
-          item.types === type
-      )
-      a.forEach(res=>{
-        sum = sum + res.num
-      })
-      return {
-        type:type,
-        createAt:item.createAt,
-        value:sum
-      }
-    })
+    this.lineData  = this.toMonthList(this.date).filter((item: { types: string; })=>
+       item.types === type
+    )
+    this.lineData.forEach(item=>
+      this.lineSum = this.lineSum + item.num
+    )
   }
 
   drawChart() {
-    if((this.eChartsType === 'line' || this.eChartsType === 'pie') && (this.lineData.length !== 0 || this.newArr.length !== 0)){
+    if((this.eChartsType === 'line' || this.eChartsType === 'pie') && (this.lineSum !== 0 || this.newArr.length !== 0)){
+      // @ts-ignore
       let myChart= eChart.init(this.$refs.container);
       let option ;
       if (this.eChartsType === 'line') {
@@ -136,7 +125,7 @@ export default class myEchart extends mixins(listDepository,Moneybox) {
           },
           xAxis: {
             type: 'category',
-            data: this.lineData.map((item: { createAt: any; }) => dayjs(item.createAt).format('DD')),
+            data: this.lineData.map((item: { createAt: any; }) => dayjs(item.createAt).format('DD')).reverse(),
             nameLocation : 'end',
             splitNumber:3,
             // ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -149,7 +138,7 @@ export default class myEchart extends mixins(listDepository,Moneybox) {
             padding: [10, 10]
           },
           series: [{
-            data: this.lineData.map(item => item.value),
+            data: this.lineData.map(item => item.num).reverse(),
             // [820, 932, 901, 934, 1290, 1330, 1320],
             type: 'line'
           }]
@@ -193,6 +182,7 @@ export default class myEchart extends mixins(listDepository,Moneybox) {
           ]
         };
       }
+      //@ts-ignore
       myChart.setOption(option);
     }
   }
@@ -217,11 +207,12 @@ export default class myEchart extends mixins(listDepository,Moneybox) {
     if(this.eChartsType ==='pie'){
       this.getTagsToday(this.selected);
       this.getBillyToday(this.selected);
-      this.getEchartData();
+      this.drawChart();
     }else {
       this.getLineData(this.selected)
     }
-    this.drawChart();
+    this.getEchartData();
+
   }
 
   @Watch('date')

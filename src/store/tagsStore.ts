@@ -59,7 +59,9 @@ const tagsStore = {
         },
     },
     actions: {  },
-    getters: {  }
+    getters: {
+
+    }
 }
 
 export default tagsStore

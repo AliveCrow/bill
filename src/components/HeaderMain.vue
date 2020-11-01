@@ -3,7 +3,7 @@
     <Header
         :billyType.sync="billyType"
         :payOrIncome.sync="payOrIncome"
-        :date.sync="dateYYYYMM"
+        :date.sync="date"
     />
     <Sum
         :payOrIncome="payOrIncome"
@@ -21,35 +21,23 @@ import Header from '@/components/Header.vue';
 import Sum from '@/components/Sum.vue';
 import listDepository from '@/mixins/listDepository';
 import dayjs from 'dayjs';
-import Moneybox from '@/mixins/Moneybox';
 
 @Component({
   name: 'HeaderMain',
   components: {Sum, Header}
 })
-export default class HeaderMain extends mixins(listDepository, Moneybox) {
-  //todo type.3
+export default class HeaderMain extends mixins(listDepository,) {
   payOrIncome: string = '-';
   billyType: string = '月账单';
-  monthListObj: { list: [], date: string };
-  payOrIncomeSelectObj: { date: string, payOrIncome: string };
+  total: number = 0;
+  billy: number = 0;
+  date:string  ='';
 
   init() {
-    this.monthListObj.list = this.records;
-    this.$store.commit('billyStore/reset');
-    this.$store.commit('billyStore/MonthList', this.monthListObj);
-    this.$store.commit('billyStore/payOrIncomeSelect', this.payOrIncomeSelectObj);
+    this.total = this.num(this.setDate(this.date)('YYYY-MM'), this.payOrIncome).total;
+    this.billy = this.num(this.setDate(this.date)('YYYY-MM'), this.payOrIncome).billy;
   }
-
   created() {
-    this.monthListObj = {
-      list: this.records,
-      date: this.date_YYYY_MM
-    };
-    this.payOrIncomeSelectObj = {
-      date: this.date_YYYY_MM,
-      payOrIncome: this.payOrIncome
-    };
     this.init();
   }
 
@@ -60,60 +48,35 @@ export default class HeaderMain extends mixins(listDepository, Moneybox) {
 
   @Watch('payOrIncome')
   onPayOrIncome() {
-    this.payOrIncomeSelectObj.payOrIncome = this.payOrIncome;
+    this.init();
     this.onBillyType();
   }
 
-  @Watch('date_YYYY_MM')
+  @Watch('date')
   onDate() {
-    this.monthListObj.date = this.date_YYYY_MM;
-    this.payOrIncomeSelectObj.date = this.date_YYYY_MM;
+
     this.init();
-    this.$store.commit('setDate', this.date_YYYY_MM);
+    this.$store.commit('setDate', this.setDate(this.date)('YYYY-MM'));
   }
 
   @Watch('billyType')
   onBillyType() {
-    //todo 优化-使用展开运算符看看?
-    //
-    this.$store.commit('billyStore/reset');
-    let currentYear;
-    let currentYearAllist: [] = [];
-    let billy: number = 0;
-    let total: number = 0;
-    let date = dayjs(this.date_YYYY_MM).format('YYYY');
-
-    if (this.billyType === '年账单') {
-      // @ts-ignore
-      let includeCurrentYear = this.records.filter(item =>
-          dayjs(item.createAt).format('YYYY') === date
-      );
-      // @ts-ignore
-      currentYear = includeCurrentYear.map(item => {
-        return item.items;
-      });
-      let a: any[] = [];
-      let x = currentYear.forEach((item: any[]) => {
-        item.forEach(item => {
-          if (item.types === this.payOrIncome) {
-            a.push(item);
-          }
-        });
-      });
-      for (let i = 0; i < a.length; i++) {
-        // @ts-ignore
-        currentYearAllist = a.map(item => {
-          return item;
-        });
-      }
-      total = a.length;
-      currentYearAllist.forEach(item => {
-        // @ts-ignore
-        billy = billy + item.num;
-      });
-      this.$store.commit('billyStore/setBilly', {billy, total});
-    } else {
+    if(this.billyType === '月账单'){
       this.init();
+    }else{
+      this.total= 0;
+      this.billy = 0;
+      //今年的账单
+      let toYearList = this.records.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; }) =>
+          dayjs(item.createAt).format('YYYY') === this.setDate(this.date)('YYYY')
+      );
+      // 算出收入和支出
+      toYearList.forEach((item: { items: any[]; }) => {
+        item.items.forEach(item => {
+          this.billy = item.num + this.billy;
+          this.total += 1;
+        });
+      });
     }
   }
 
