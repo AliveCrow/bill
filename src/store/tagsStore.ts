@@ -23,11 +23,11 @@ const tagsStore = {
             const list = state.tagsDataSource.filter(item => item.name === value);
             if (list.length !== 0) {
                 // @ts-ignore
-                alert('已有同名标签');
+                // alert('已有同名标签');
                 return 'duplicated';
             } else if (value === '') {
-                alert('标签不能为空');
-                return 'duplicated';
+                // alert('标签不能为空');
+                return 'tag is empty';
             } else {
                 let id = createId();
                 // @ts-ignore

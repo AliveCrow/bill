@@ -14,7 +14,7 @@
         <Echart name="每日统计" :day="day" eChartsType="pie" replaceWith="今天没有记录"/>
       </keep-alive>
       <div style="height: 53px;position: relative;background-color: #3da75b">
-        <SelectDate :date.sync="month" class="name" label-class="labelClass" input-class="inputClass" key="210"/>
+        <SelectDate :date.sync="month" class="name" label-class="labelClass" input-class="inputClass" key1="210"/>
       </div>
       <keep-alive>
         <Echart name="每月统计" eChartsType="line" replaceWith="本月没有记录" :month="month"/>
@@ -62,7 +62,7 @@ export default class StaticHeader extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/var";
+@import "../../assets/scss/css/var";
 
 
 .container {
@@ -80,6 +80,8 @@ export default class StaticHeader extends mixins(listDepository) {
       height: 20px;
       width: 20px;
       z-index: 1;
+      pointer-events: none;
+
     }
 
     > input[type='date'] {

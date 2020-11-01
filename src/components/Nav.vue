@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/app";
+@import "../assets/scss/css/app";
 nav {
   box-shadow: 0 0 3px rgba(#000, .3);
   display: flex;

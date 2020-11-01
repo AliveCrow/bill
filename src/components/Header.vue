@@ -5,7 +5,7 @@
       <span class="year date" @click="billC(false)" :class="{selected:!selected}">年账单</span>
     </div>
     <div class="header_middle">
-      <SelectDate :date.sync = 'date'  />
+      <SelectDate :date.sync = 'date' key1="192"  />
       <div class="header_middle_select">
         <span :class="{selected:povit==='-'}" @click="selectPayOrIncome('-')">支出</span>
         <span :class="{selected:povit ==='+'}" @click="selectPayOrIncome('+')">收入</span>
@@ -49,7 +49,7 @@ export default class Header extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "../../public/css/var";
+@import "../assets/scss/css/var";
 
 .header_nav {
   font-size: 1.1rem;

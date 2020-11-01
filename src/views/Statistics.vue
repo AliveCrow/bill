@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/var";
+@import "../assets/scss/css/var";
 
 .billy_box{
   border-top-left-radius: 20px;

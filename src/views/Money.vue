@@ -145,7 +145,7 @@ export default class Money extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "../../public/css/var";
+@import "../assets/scss/css/var";
 .icons {
   background-color: rgba($whiteColor, 1);
   box-shadow: 0 0 10px rgba(#000, .2);

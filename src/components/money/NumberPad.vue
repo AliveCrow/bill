@@ -103,7 +103,7 @@ export default class numberPag extends Vue {
 </script>
 
 <style scoped lang='scss'>
-@import "../../../public/css/var";
+@import "../../assets/scss/css/var";
 
 #number_pad {
   display: flex;

@@ -62,7 +62,7 @@ export default class Tag extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "../../../public/css/var";
+@import "../../assets/scss/css/var";
 
 .tags {
   text-align: left;

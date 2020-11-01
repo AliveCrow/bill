@@ -1,13 +1,16 @@
 <template>
   <div>
+    <Message :type="msg_type" ref="msg" v-show="msg_show">
+      {{ msg }}
+    </Message>
     <Layout className="label_page">
       <div class="modify">
         修改标签
       </div>
       <div class="labels_box">
 <!--        创建新标签-->
-        <Create />
-        <ListItem  v-for="(tag,index) in tags" :tag="tag.name" :index="index" :key="tag.id" />
+        <Create  />
+        <ListItem  v-for="(tag,index) in tags" :tag="tag.name" :index="index" :key="index" />
       </div>
     </Layout>
   </div>
@@ -38,7 +41,7 @@ export default class Label  extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import 'public/css/var';
+@import '../assets/scss/css/var';
 
 .label_page {
   .modify {

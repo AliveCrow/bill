@@ -16,12 +16,14 @@
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 import box from '@/components/labels/box.vue';
+import {mixins} from 'vue-class-component';
+import listDepository from '@/mixins/listDepository';
 
 
 @Component({
   components: {box}
 })
-export default class ListItem extends Vue {
+export default class ListItem extends mixins(listDepository) {
   @Prop(String) tag!: string;
   @Prop(Number) index!: number;
 
@@ -70,7 +72,7 @@ export default class ListItem extends Vue {
 </script>
 
 <style scoped lang='scss'>
-@import 'public/css/var';
+@import '../../assets/scss/css/var';
 
 .icon {
   padding: 0 8px;

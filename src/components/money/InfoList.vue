@@ -67,7 +67,7 @@ export default class InfoList extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "../../../public/css/var";
+@import "../../assets/scss/css/var";
 .into_list {
   .into_list_date {
     > p:nth-child(1) {

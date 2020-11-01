@@ -86,7 +86,7 @@ export default class HeaderMain extends mixins(listDepository,) {
 </script>
 
 <style scoped lang='scss'>
-@import "../../public/css/var";
+@import "../assets/scss/css/var";
 
 #header_main_app {
   height: 280px;

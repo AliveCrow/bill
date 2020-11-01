@@ -235,7 +235,7 @@ export default class myEchart extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/var";
+@import "../../assets/scss/css/var";
 
 .app {
   //background-color: rgba($selectedColor,.9);

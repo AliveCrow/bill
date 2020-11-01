@@ -1,5 +1,6 @@
 <template>
   <box>
+
     <Icon idName="label" className="icon_label label"/>
     <label class="label_item_name">
       <input placeholder="创建新标签" type="text" v-model="text" class="label_item_input"/>
@@ -12,17 +13,21 @@
 import Vue from 'vue';
 import box from '@/components/labels/box.vue';
 import {Component} from 'vue-property-decorator';
+import {mixins} from 'vue-class-component';
+import listDepository from '@/mixins/listDepository';
 
 @Component({
-  components: {box},
+  components: {box,},
 })
-export default class Label  extends Vue{
+export default class Label  extends mixins(listDepository){
 
   text: string= ''
 
-  create_tag(){
-    this.$store.commit('tagsStore/tagsSetter',this.text)
-    this.clearInput()
+  create_tag() {
+    let ret = this.$store.commit('tagsStore/tagsSetter', this.text)
+    if (!ret) {
+      this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', '$Danger')
+    }
   }
   clearInput(){
     this.text = ''
@@ -33,7 +38,7 @@ export default class Label  extends Vue{
 </script>
 
 <style scoped lang='scss'>
-@import 'public/css/var';
+@import '../../assets/scss/css/var';
 .icon {
   padding: 0 8px;
   height: 38px;

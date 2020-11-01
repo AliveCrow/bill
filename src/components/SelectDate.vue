@@ -1,10 +1,10 @@
 <template>
-  <label for="start" class="header_input" :class="labelClass" >
+  <label for="start" class="header_input" :class="labelClass"  >
     <input type="month" id="start" name="start" :class="inputClass"
-           :min="minDate" :value="val" ref="year_month"
+           :min="minDate" :value="val"
            @change="selectDate"
     >
-    <eva-icon name="chevron-down-outline" fill="#fff" class="icons" ></eva-icon>
+    <eva-icon name="chevron-down-outline" fill="#fff" class="icons" :key="key1"  ></eva-icon>
   </label>
 </template>
 
@@ -17,6 +17,7 @@ import listDepository from '@/mixins/listDepository';
 export default class SelectDate extends mixins(listDepository) {
   @Prop(String) labelClass:string |undefined;
   @Prop(String) inputClass:string |undefined;
+  @Prop(String) key1:string |undefined;
 
   minDate: string = '2001-01';
   val:string = '';
@@ -35,7 +36,7 @@ export default class SelectDate extends mixins(listDepository) {
 </script>
 
 <style scoped lang='scss'>
-@import "../../public/css/var";
+@import "../assets/scss/css/var";
 
 
 input[type='month']::-webkit-calendar-picker-indicator {
@@ -46,24 +47,6 @@ input[type='month']::-webkit-calendar-picker-indicator {
   width: 100px;
   left: 0;
   outline: none;
-}
-.inputClass{
-  line-height: 50px!important;
-  &::-webkit-calendar-picker-indicator {
-    background-image: none;
-    color: #666;
-    width: 100% !important;
-    height: 50px;
-    position: absolute;
-    top: 0;
-    left: -30px!important;
-    outline: none;
-  }
-  &~.icons{
-    position: absolute;
-    top: 15px;
-
-  }
 }
 .icons {
   position: absolute;
@@ -86,5 +69,24 @@ input[type='month'] {
   color: #fff;
 }
 
+.inputClass{
+  line-height: 50px!important;
+  &::-webkit-calendar-picker-indicator {
+    background-image: none;
+    color: #666;
+    width: 100% !important;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: -30px!important;
+    outline: none;
 
+  }
+  &~.icons{
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    pointer-events: none;
+  }
+}
 </style>

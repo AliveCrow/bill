@@ -21,7 +21,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import "public/css/app";
+@import "assets/scss/css/app";
 * {
   padding: 0;
   margin: 0;

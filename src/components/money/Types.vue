@@ -26,7 +26,7 @@ export default class Types extends Vue {
 </script>
 
 <style scoped lang='scss'>
-@import "public/css/var";
+@import "../../assets/scss/css/var";
 
 ul {
   display: flex;
