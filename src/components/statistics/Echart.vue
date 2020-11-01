@@ -7,7 +7,7 @@
         <button :class="{selected:!selected}" @click="change(false)">收入</button>
       </div>
     </div>
-    <div class="echarts" v-if="eChartsType==='line'?lineSum!==0:newArr.length!==0" :key="key1">
+    <div class="echarts" v-if="eChartsType==='line'?lineData.length!==0:newArr.length!==0" :key="key1">
       <div id="main" ref="container" style="width: 100%;height:480px">
       </div>
     </div>
@@ -49,6 +49,7 @@ export default class myEchart extends mixins(listDepository) {
   //line
   lineData: any[] = [];
   lineSum:number = 0;
+  color:string = ''
 
   change(bool: boolean) {
     this.selected = bool;
@@ -99,14 +100,22 @@ export default class myEchart extends mixins(listDepository) {
 
   //line
   getLineData(selected:boolean){
-    this.lineSum = 0
     let type = selected ? '-' : '+';
-    this.lineData  = this.toMonthList(this.month).filter((item: { types: string; })=>
-       item.types === type
-    )
-    this.lineData.forEach(item=>
-      this.lineSum = this.lineSum + item.num
-    )
+    this.color = selected ? '#F56C6C' : '#67C23A';
+    this.lineData = []
+   let a =  this.records.filter(item=>
+    dayjs(item.createAt).format('YYYY-MM') === this.setDate(this.getDate)('YYYY-MM')
+  )
+    a.forEach(item=>{
+      let sum = 0
+      item.items.forEach(item=>{
+        if(item.types === type){
+          sum = sum + item.num
+          return
+        }
+      })
+      this.lineData.push({date:item.createAt,value:sum})
+    })
   }
 
   //重新获取echart数据
@@ -118,12 +127,13 @@ export default class myEchart extends mixins(listDepository) {
 
 
   drawChart() {
-    if((this.eChartsType === 'line' || this.eChartsType === 'pie') && (this.lineSum !== 0 || this.newArr.length !== 0)){
+    if((this.eChartsType === 'line' || this.eChartsType === 'pie') && (this.lineData.length !== 0 || this.newArr.length !== 0)){
       // @ts-ignore
       let myChart= eChart.init(this.$refs.container);
       let option ;
       if (this.eChartsType === 'line') {
         option = {
+          color:this.color,
           title: {
             text: dayjs(this.month).format('YYYY-MM') + '月',
             left: 'center'
@@ -134,7 +144,7 @@ export default class myEchart extends mixins(listDepository) {
           },
           xAxis: {
             type: 'category',
-            data: this.lineData.map((item: { createAt: any; }) => dayjs(item.createAt).format('DD')).reverse(),
+            data: this.lineData.map(item=>dayjs(item.date).format('DD')).reverse(),
             nameLocation : 'end',
             splitNumber:3,
             // ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -147,7 +157,7 @@ export default class myEchart extends mixins(listDepository) {
             padding: [10, 10]
           },
           series: [{
-            data: this.lineData.map(item => item.num).reverse() ,
+            data: this.lineData.map(item => item.value).reverse() ,
             // [820, 932, 901, 934, 1290, 1330, 1320],
             type: 'line'
           }]
@@ -200,10 +210,13 @@ export default class myEchart extends mixins(listDepository) {
   mounted() {
     if(this.eChartsType === 'line'){
       this.getLineData(this.selected)
+      console.log(this.lineData);
+
     }else {
      this.reGetPie()
     }
     this.drawChart();
+
   }
   updated(){
     this.drawChart();
@@ -223,6 +236,7 @@ export default class myEchart extends mixins(listDepository) {
   onMonth(){
     this.getLineData(this.selected)
     this.drawChart();
+    console.log(this.lineData);
   }
   @Watch('day')
   onDay(){
