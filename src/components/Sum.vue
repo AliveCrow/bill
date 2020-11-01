@@ -1,7 +1,10 @@
 <template>
   <div class="header_bottom">
     <span>共{{ payOrIncome === '-' ? '支出' : '收入' }}{{ total }}笔,合计</span>
-    <p class="consume">{{ billy }}</p>
+    <transition name="toggle_ani">
+
+    <p class="consume" :key="billy">{{ billy }}</p>
+    </transition>
   </div>
 </template>
 
@@ -23,6 +26,17 @@ export default class Sum extends Vue{
 </script>
 
 <style scoped lang='scss'>
+
+.toggle_ani-enter-active,
+.toggle_ani-leave-active {
+  transition: opacity .2s ease;
+}
+
+.toggle_ani-enter,
+.toggle_ani-leave-active {
+  opacity: 0;
+}
+
 .header_bottom {
   position: relative;
   align-self: flex-start;

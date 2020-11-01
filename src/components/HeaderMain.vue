@@ -5,11 +5,11 @@
         :payOrIncome.sync="payOrIncome"
         :date.sync="date"
     />
-    <Sum
-        :payOrIncome="payOrIncome"
-        :total="total"
-        :billy="billy"
-    />
+        <Sum
+            :payOrIncome="payOrIncome"
+            :total="total"
+            :billy="billy"
+        />
   </div>
 </template>
 
@@ -87,6 +87,7 @@ export default class HeaderMain extends mixins(listDepository,) {
 
 <style scoped lang='scss'>
 @import "../assets/scss/css/var";
+
 
 #header_main_app {
   height: 280px;
