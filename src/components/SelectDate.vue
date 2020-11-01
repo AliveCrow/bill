@@ -4,7 +4,7 @@
            :min="minDate" :value="val" ref="year_month"
            @change="selectDate"
     >
-    <eva-icon name="chevron-down-outline" fill="#fff" class="icons"></eva-icon>
+    <eva-icon name="chevron-down-outline" fill="#fff" class="icons" ></eva-icon>
   </label>
 </template>
 

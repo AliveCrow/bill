@@ -35,7 +35,8 @@ export default class myEchart extends mixins(listDepository) {
   @Prop(String) name: string | undefined;
   @Prop(String) eChartsType: string | undefined;
   @Prop(String) replaceWith:string | undefined;
-  @Prop(String) date:string | undefined;
+  @Prop(String) month:string | undefined;
+  @Prop(String) day:string | undefined;
 
   key1:number = 11;
   key2:number = 12; //没有数据变更就不会刷新
@@ -60,7 +61,7 @@ export default class myEchart extends mixins(listDepository) {
     // 找出今天一天所有消费里的标签
     this.primordialRecords
         .filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; types: string; }) =>
-            dayjs(item.createAt).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD') && item.types === type
+            dayjs(item.createAt).format('YYYY-MM-DD') === dayjs(this.day).format('YYYY-MM-DD') && item.types === type
         ).forEach((item1: { tags: any }) => {
           item1.tags
               .forEach((res: { name: string; }) => {
@@ -74,7 +75,7 @@ export default class myEchart extends mixins(listDepository) {
     let type = selected ? '-' : '+';
     // 今天的账单
     this.billyToday = this.primordialRecords.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; tags: any[]; types: string; }) =>
-        dayjs(item.createAt).format('YYYY-MM-DD') === dayjs().format('YYYY-MM-DD')
+        dayjs(item.createAt).format('YYYY-MM-DD') === dayjs(this.day).format('YYYY-MM-DD')
         && this.tagsToday.indexOf(item.tags[0])
         && item.types === type
     );
@@ -100,13 +101,21 @@ export default class myEchart extends mixins(listDepository) {
   getLineData(selected:boolean){
     this.lineSum = 0
     let type = selected ? '-' : '+';
-    this.lineData  = this.toMonthList(this.date).filter((item: { types: string; })=>
+    this.lineData  = this.toMonthList(this.month).filter((item: { types: string; })=>
        item.types === type
     )
     this.lineData.forEach(item=>
       this.lineSum = this.lineSum + item.num
     )
   }
+
+  //重新获取echart数据
+  reGetPie(){
+    this.getTagsToday(this.selected);
+    this.getBillyToday(this.selected);
+    this.getEchartData();
+  }
+
 
   drawChart() {
     if((this.eChartsType === 'line' || this.eChartsType === 'pie') && (this.lineSum !== 0 || this.newArr.length !== 0)){
@@ -116,7 +125,7 @@ export default class myEchart extends mixins(listDepository) {
       if (this.eChartsType === 'line') {
         option = {
           title: {
-            text: dayjs(this.date).format('YYYY-MM') + '月',
+            text: dayjs(this.month).format('YYYY-MM') + '月',
             left: 'center'
           },
           tooltip: {
@@ -138,7 +147,7 @@ export default class myEchart extends mixins(listDepository) {
             padding: [10, 10]
           },
           series: [{
-            data: this.lineData.map(item => item.num).reverse(),
+            data: this.lineData.map(item => item.num).reverse() ,
             // [820, 932, 901, 934, 1290, 1330, 1320],
             type: 'line'
           }]
@@ -166,7 +175,7 @@ export default class myEchart extends mixins(listDepository) {
           },
           series: [
             {
-              name: '访问来源',
+              name: '消费',
               type: 'pie',
               radius: '55%',
               center: ['50%', '60%'],
@@ -190,11 +199,9 @@ export default class myEchart extends mixins(listDepository) {
 
   mounted() {
     if(this.eChartsType === 'line'){
-      this.getLineData(this.selected);
+      this.getLineData(this.selected)
     }else {
-      this.getTagsToday(this.selected);
-      this.getBillyToday(this.selected);
-      this.getEchartData();
+     this.reGetPie()
     }
     this.drawChart();
   }
@@ -205,19 +212,22 @@ export default class myEchart extends mixins(listDepository) {
   @Watch('selected')
   onSelected() {
     if(this.eChartsType ==='pie'){
-      this.getTagsToday(this.selected);
-      this.getBillyToday(this.selected);
-      this.drawChart();
+      this.reGetPie()
     }else {
       this.getLineData(this.selected)
     }
-    this.getEchartData();
-
+    this.drawChart();
   }
 
-  @Watch('date')
-  onDate(){
+  @Watch('month')
+  onMonth(){
     this.getLineData(this.selected)
+    this.drawChart();
+  }
+  @Watch('day')
+  onDay(){
+    this.newArr =[]
+    this.reGetPie()
     this.drawChart();
   }
 
