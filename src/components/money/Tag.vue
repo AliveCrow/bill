@@ -49,7 +49,7 @@ export default class Tag extends mixins(listDepository) {
 
 
   create() {
-    const text = prompt('请输入要添加的标签名称');
+    let text = prompt('请输入要添加的标签名称') as string
     if(this.checkTag(text)){
       this.$store.commit('tagsStore/tagsSetter', text);
     }else {

@@ -1,7 +1,6 @@
 <template>
-  <div class="money_app">
-
-    <div id="content">
+  <div class="money_app"  >
+    <div id="content" style="padding-bottom: 70px">
       <div class="main" :class="className" ref="Layout">
         <div class="main_slot">
             <slot></slot>
@@ -12,13 +11,13 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script lang='js'>
 import HeaderMain from '@/components/HeaderMain.vue';
 
 export default {
   components: {HeaderMain},
   props: ['className'],
-  name: 'Layout'
+  name: 'Layout',
 
 };
 </script>

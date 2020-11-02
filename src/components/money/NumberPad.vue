@@ -75,12 +75,14 @@ export default class numberPag extends Vue {
     this.insert = '0';
   }
 
-  addAni(arr){
-    arr.forEach(item=>{
-      item.addEventListener('touchstart',function (e){
+  addAni(arr: any[]){
+    arr.forEach((item: { addEventListener: (arg0: string, arg1: { (e: any): void; (e: any): void; }) => void; })=>{
+      item.addEventListener('touchstart',function (e: any){
+        // @ts-ignore
         this.style.backgroundColor = 'rgba(238,238,238,.8)'
       })
-      item.addEventListener('touchend',function (e){
+      item.addEventListener('touchend',function (e: any){
+        // @ts-ignore
         this.style.backgroundColor = 'rgba(238,238,238,.4)'
       })
     })
@@ -88,12 +90,16 @@ export default class numberPag extends Vue {
 
 
   mounted(){
+    // @ts-ignore
     this.addAni(this.$refs.pad_btn);
+    // @ts-ignore
     this.$refs.pad_btn_right.children.forEach(item=>{
-          item.addEventListener('touchstart',function (e){
+          item.addEventListener('touchstart',function (e: any){
+            // @ts-ignore
             this.style.opacity = '.8'
           })
-          item.addEventListener('touchend',function (e){
+          item.addEventListener('touchend',function (e: any){
+            // @ts-ignore
             this.style.opacity = '1'
           })
         })

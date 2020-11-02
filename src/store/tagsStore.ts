@@ -1,24 +1,29 @@
 import createId from '@/lib/createId';
 
 type storeTags = {
-    tagsListName:string,
-    tagsDataSource:Tag[] | undefined
+    tagsListName: string,
+    tagsDataSource: Tag[] | undefined
 }
 
-const state:storeTags = {
+const state: storeTags = {
     tagsListName: 'tags',
-    tagsDataSource: [],
-}
+    tagsDataSource: []
+};
 
 const tagsStore = {
-    namespaced:true,
+    namespaced: true,
     state,
     mutations: {
         //tag
-        tagsGetter: function (state:storeTags) {
+        tagsGetter: function (state: storeTags) {
+            if(!localStorage.getItem(state.tagsListName)){
+                let defaultTag =
+                    JSON.stringify([{'id': 1, 'name': '买衣服'}, {'id': 2, 'name': '购物'}, {'id': 3, 'name': '游戏'}, {'id': 4, 'name': '出行'}, {'id': 5, 'name': '吃饭'}, {'id': 6, 'name': '旅游'}])
+                localStorage.setItem('tags', defaultTag);
+            }
             state.tagsDataSource = JSON.parse(localStorage.getItem(state.tagsListName) || '[]');
         },
-        tagsSetter: function (state:storeTags, value: string) {
+        tagsSetter: function (state: storeTags, value: string) {
             // @ts-ignore
             const list = state.tagsDataSource.filter(item => item.name === value);
             if (list.length !== 0) {
@@ -37,7 +42,7 @@ const tagsStore = {
                 // return 'success';
             }
         },
-        tagsUpdate: function (state:storeTags, args: { index: number, tagName: string }) {
+        tagsUpdate: function (state: storeTags, args: { index: number, tagName: string }) {
             const items = state.tagsDataSource!.filter((item: { name: string; }) => item.name === args.tagName);
             // @ts-ignore
             if (state.tagsDataSource[args.index].name === args.tagName) {
@@ -52,16 +57,14 @@ const tagsStore = {
                 return 'success';
             }
         },
-        tagsRemoved: function (state:storeTags,index:number){
-            state.tagsDataSource!.splice(index,1)
+        tagsRemoved: function (state: storeTags, index: number) {
+            state.tagsDataSource!.splice(index, 1);
             localStorage.setItem(state.tagsListName, JSON.stringify(state.tagsDataSource));
-            return 'success'
-        },
+            return 'success';
+        }
     },
-    actions: {  },
-    getters: {
+    actions: {},
+    getters: {}
+};
 
-    }
-}
-
-export default tagsStore
+export default tagsStore;

@@ -2,16 +2,50 @@
   <div id="money">
 
     <Layout className="layout_one" ref="layout_one">
-      <HeaderMain key="1001" />
-      <div  key="1002"  class="billy_box">
-        <span class="title">月账单</span>
-        <div class="info_box">
+      <HeaderMain key="1001" :allYearPersent.sync="allYearPersent" :billyType.sync="billyType"/>
+      <div key="1002" class="billy_box">
+        <transition name="list">
+        <div class="info_box" key="911" v-if="billyType === '月账单'">
+          <span class="title">月账单</span>
           <transition name="toggle_ani">
-          <InfoList :date="date" :key="uns2"/>
+            <InfoList :key="uns2"/>
           </transition>
         </div>
+          <div v-else class="year_billy">
+            <span class="title">年统计</span>
+            <ul>
+              <li>
+              <span class="year_pay">
+                <span
+                    style="font-size:.7rem">年支出: {{allYearPersent.pay}}</span>
+                <div :style="
+                'background: rgb(255,72,72);background: linear-gradient(90deg, rgba(255,72,72,1) 0%, rgba(255,72,72,1) '
+                +`${allYearPersent.pay/allYearPersent.allYearTotal*100+'%'}`+ ',rgba(240,240,240,1) '
+                + `${allYearPersent.pay/allYearPersent.allYearTotal*100+'%'}` +
+                ',rgba(240,240,240,1) 100%);'"
+                >
+                </div>
+              </span>
+              </li>
+              <li>
+              <span class="year_in">
+                <span
+                    style="font-size:.7rem">年收入: {{allYearPersent.InCome}}</span>
+              <div :style="
+              'background: rgb(103,194,58);background: linear-gradient(90deg, rgba(103,194,58,1) 0%, rgba(103,194,58,1) '
+              +`${allYearPersent.InCome/allYearPersent.allYearTotal*100+'%'}`+ ',rgba(240,240,240,1) '
+              + `${allYearPersent.InCome/allYearPersent.allYearTotal*100+'%'}` +
+              ',rgba(240,240,240,1) 100%);'"
+              >
+              </div>
+              </span>
+              </li>
+            </ul>
+          </div>
+        </transition>
+
       </div>
-      <eva-icon  key="1003" name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
+      <eva-icon key="1003" name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
                 @click="showNumPad"></eva-icon>
     </Layout>
     <div class="money_box go go_bottom" ref="NumPad">
@@ -31,7 +65,7 @@
         <span>备注:</span>
         <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
       </label>
-      <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"  />
+      <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"/>
       <Message :type="msg_type" ref="msg" v-show="msg_show">
         {{ msg }}
       </Message>
@@ -65,14 +99,15 @@ export default class Money extends mixins(listDepository) {
   uns1: number = 1;
   uns2: number = 2;
   uns3: number = 3;
-  isError:boolean = false;
-  msg_show:boolean = false;
+  isError: boolean = false;
+  msg_show: boolean = false;
+  allYearPersent = {};
+  billyType: string = '月账单';
 
   mounted() {
     // @ts-ignore
     this.$refs.year_day.value = dayjs().format('YYYY-MM-DD');
   }
-
 
   getTags(list: string[]) {
     this.recordListItem.tags = list;
@@ -142,16 +177,15 @@ export default class Money extends mixins(listDepository) {
       this.hideNumPad();
       this.uns2 = 0;
     }, 400);
-
   }
 
   @Watch('isError')
-  onch(){
-    if(this.isError){
-      this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', 'Danger')
+  onch() {
+    if (this.isError) {
+      this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', 'Danger');
       setTimeout(() => {
         this.msg_show = false;
-        this.isError = false
+        this.isError = false;
       }, 1500);
     }
   }
@@ -160,15 +194,37 @@ export default class Money extends mixins(listDepository) {
 
 <style scoped lang='scss'>
 @import "../assets/scss/css/var";
+
 .toggle_ani-enter-active,
 .toggle_ani-leave-active {
   transition: opacity .3s;
 }
-
 .toggle_ani-enter,
-.toggle_ani-leave-active {
+.toggle_ani-leave-to {
   opacity: 0;
 }
+
+//.list
+.list-enter-active,
+.list-leave-active {
+  animation: list_ani 0.4s cubic-bezier(.17,.67,.02,.97);
+}
+.list-enter,.list-leave-to{
+  transform: translateX(0);
+  display: none;
+}
+
+
+@keyframes list_ani {
+  0%{
+    transform: translateX(50%);
+  }
+  100%{
+    transform: translateX(0);
+  }
+}
+
+
 .icons {
   background-color: rgba($whiteColor, 1);
   box-shadow: 0 0 10px rgba(#000, .2);
@@ -188,6 +244,42 @@ export default class Money extends mixins(listDepository) {
   border-top-right-radius: 20px;
   background-color: #fff;
   margin-top: -30px;
+
+  .year_billy {
+    ul > li {
+      text-align: left;
+      width: 80%;
+      margin: 5px auto;
+
+      span {
+        width: 100%;
+        align-items: center;
+      }
+
+      .year_pay {
+        color: $Danger;
+
+        > div {
+          border-radius: 10px;
+          margin-bottom: 10px;
+          width: 100%;
+          height: 5px;
+          background-color: $Danger;
+        }
+      }
+
+      .year_in {
+        color: $Success;
+        > div {
+          border-radius: 10px;
+          margin-bottom: 10px;
+          width: 100%;
+          height: 5px;
+          background-color: $Success;
+        }
+      }
+    }
+  }
 
   .title {
     display: block;

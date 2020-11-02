@@ -7,7 +7,7 @@
         <button :class="{selected:!selected}" @click="change(false)">收入</button>
       </div>
     </div>
-    <div class="echarts" v-if="eChartsType==='line'?lineData.length!==0:newArr.length!==0" :key="key1">
+    <div class="echarts" v-if="eChartsType==='line'?(lineData.length!==0 && lineSum!==0) :newArr.length!==0" :key="key1">
       <div id="main" ref="container" style="width: 100%;height:480px">
       </div>
     </div>
@@ -103,10 +103,10 @@ export default class myEchart extends mixins(listDepository) {
     let type = selected ? '-' : '+';
     this.color = selected ? '#F56C6C' : '#67C23A';
     this.lineData = []
-   let a =  this.records.filter(item=>
+   let a =  this.records.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; })=>
     dayjs(item.createAt).format('YYYY-MM') === this.setDate(this.getDate)('YYYY-MM')
   )
-    a.forEach(item=>{
+    a.forEach((item: { items: { types: string;num:number }[]; createAt: any; })=>{
       let sum = 0
       item.items.forEach(item=>{
         if(item.types === type){
@@ -115,6 +115,7 @@ export default class myEchart extends mixins(listDepository) {
         }
       })
       this.lineData.push({date:item.createAt,value:sum})
+      this.lineSum = sum
     })
   }
 

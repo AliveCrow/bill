@@ -33,6 +33,7 @@ export default class HeaderMain extends mixins(listDepository,) {
   billy: number = 0;
   date:string  ='';
 
+
   init() {
     this.total = this.num(this.setDate(this.date)('YYYY-MM'), this.payOrIncome).total;
     this.billy = this.num(this.setDate(this.date)('YYYY-MM'), this.payOrIncome).billy;
@@ -54,13 +55,19 @@ export default class HeaderMain extends mixins(listDepository,) {
 
   @Watch('date')
   onDate() {
-
     this.init();
     this.$store.commit('setDate', this.setDate(this.date)('YYYY-MM'));
+    this.onBillyType()
   }
 
   @Watch('billyType')
   onBillyType() {
+    let allYearPersent = {
+      allYearTotal:0,
+      InCome:0,
+      pay:0
+    }
+
     if(this.billyType === '月账单'){
       this.init();
     }else{
@@ -73,11 +80,22 @@ export default class HeaderMain extends mixins(listDepository,) {
       // 算出收入和支出
       toYearList.forEach((item: { items: any[]; }) => {
         item.items.forEach(item => {
-          this.billy = item.num + this.billy;
-          this.total += 1;
+          allYearPersent.allYearTotal = allYearPersent.allYearTotal+item.num
+          if(item.types === '-'){
+            allYearPersent.pay =  allYearPersent.pay + item.num
+          }else {
+            allYearPersent.InCome = allYearPersent.InCome + item.num
+          }
+          if(item.types === this.payOrIncome){
+            this.billy = item.num + this.billy;
+            this.total += 1;
+            return
+          }
         });
       });
     }
+    this.$emit('update:billyType',this.billyType)
+    this.$emit('update:allYearPersent',allYearPersent)
   }
 
 }

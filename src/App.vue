@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-     <router-view style="height:100vh;overflow-y: auto" />
+    <router-view style="height: 100vh;overflow-y: hidden;padding-bottom: 100px" />
     <Nav v-show="!(name ==='NotFound')" />
   </div>
 </template>
 <script>
 
 export default {
-
   data(){
     return {
       name:''
@@ -48,6 +47,7 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
+
 }
 
 .icon {

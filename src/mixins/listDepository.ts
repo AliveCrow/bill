@@ -37,7 +37,7 @@ export default class listDepository extends Vue {
     }
 
     get tags() {
-        this.$store.commit('tagsStore/tagsGetter');
+        this.$store.commit('tagsStore/tagsGetter')
         return this.$store.state.tagsStore.tagsDataSource;
     }
 

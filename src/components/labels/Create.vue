@@ -19,6 +19,8 @@ import listDepository from '@/mixins/listDepository';
 })
 export default class Label  extends mixins(listDepository){
   text: string= ''
+
+
   create_tag() {
     if(this.checkTag(this.text)){
       this.$store.commit('tagsStore/tagsSetter', this.text);

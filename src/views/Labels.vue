@@ -11,7 +11,7 @@
 <!--        创建新标签-->
         <Create key="1103" :isError.sync="isError"  />
         <transition-group name="list" tag="p">
-        <ListItem  v-for="(tag,index) in tags" :tag="tag.name" :index="index" :key="index" />
+        <ListItem  v-for="(tag,index) in tags" :tag="tag.name" :index="index" :key="tag.id" />
         </transition-group>
       </div>
     </Layout>

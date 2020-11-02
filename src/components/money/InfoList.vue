@@ -1,5 +1,5 @@
 <template>
-  <div class="into_list" :key="getDate">
+  <div class="into_list" :key="getDate" v-if="this.toMonthList(getDate).length!==0">
     <blockquote v-for="(date,index) in monthList" :key="index">
       <div class="into_list_date">
         <p>{{ date.createAt }}</p>
@@ -26,6 +26,9 @@
       </ul>
     </blockquote>
   </div>
+  <div v-else class="into_l" :key="getDate" >
+    本月暂无账单
+  </div>
 </template>
 
 <script lang='ts'>
@@ -37,9 +40,10 @@ import dayjs from 'dayjs';
 
 @Component
 export default class InfoList extends mixins(listDepository) {
-  @Prop(String) date: string | undefined;
   sum: [] | undefined;
   monthList:[]|undefined;
+
+  getMonLi(){}
 
   created() {
     this.monthList = this.records.filter((item: { createAt: string; })=>
