@@ -26,6 +26,7 @@ export default {
   box-sizing: border-box;
 }
 
+
 body {
   font-family: $font-family;
   -webkit-font-smoothing: antialiased;

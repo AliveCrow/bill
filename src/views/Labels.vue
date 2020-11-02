@@ -3,7 +3,7 @@
     <Message :type="msg_type" ref="msg" v-show="msg_show">
       {{ msg }}
     </Message>
-    <Layout className="label_page">
+    <Layout className="label_page" key="10101010">
       <div class="modify"  key="1101">
         修改标签
       </div>

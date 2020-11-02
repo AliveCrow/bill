@@ -23,6 +23,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+
+
+
 .money_app {
   #content {
     height: 100vh;

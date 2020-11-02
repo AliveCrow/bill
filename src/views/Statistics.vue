@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Layout>
+    <Layout  key="1010101010">
       <HeaderMain key="1201"  />
       <div key="1202"  class="billy_box">
           <StaticHeader  />

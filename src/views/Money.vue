@@ -1,20 +1,19 @@
 <template>
-  <div id="money">
-
-    <Layout className="layout_one" ref="layout_one">
-      <HeaderMain key="1001" :allYearPersent.sync="allYearPersent" :billyType.sync="billyType"/>
-      <div key="1002" class="billy_box">
-        <transition name="list">
-        <div class="info_box" key="911" v-if="billyType === '月账单'">
-          <span class="title">月账单</span>
-          <transition name="toggle_ani">
-            <InfoList :key="uns2"/>
-          </transition>
-        </div>
-          <div v-else class="year_billy">
-            <span class="title">年统计</span>
-            <ul>
-              <li>
+    <div id="money">
+      <Layout className="layout_one" ref="layout_one" key="101010">
+        <HeaderMain key="1001" :allYearPersent.sync="allYearPersent" :billyType.sync="billyType"/>
+        <div key="1002" class="billy_box">
+          <transition name="list">
+            <div class="info_box" key="911" v-if="billyType === '月账单'">
+              <span class="title">月账单</span>
+              <transition name="toggle_ani">
+                <InfoList :key="uns2"/>
+              </transition>
+            </div>
+            <div v-else class="year_billy">
+              <span class="title">年统计</span>
+              <ul>
+                <li>
               <span class="year_pay">
                 <span
                     style="font-size:.7rem">年支出: {{allYearPersent.pay}}</span>
@@ -26,8 +25,8 @@
                 >
                 </div>
               </span>
-              </li>
-              <li>
+                </li>
+                <li>
               <span class="year_in">
                 <span
                     style="font-size:.7rem">年收入: {{allYearPersent.InCome}}</span>
@@ -39,38 +38,38 @@
               >
               </div>
               </span>
-              </li>
-            </ul>
-          </div>
-        </transition>
+                </li>
+              </ul>
+            </div>
+          </transition>
 
-      </div>
-      <eva-icon key="1003" name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
-                @click="showNumPad"></eva-icon>
-    </Layout>
-    <div class="money_box go go_bottom" ref="NumPad">
-      <eva-icon name="close-outline" fill="#3da75b" class="back" animation="shake" height="100%"
-                @click="hideNumPad"></eva-icon>
-      <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1"/>
-      <Types @exposeType="getType" :value="recordListItem.types"/>
-      <div style="height: 53px;position: relative;">
-        <label for="start" class="header_input">
-          <input type="date" id="start" name="start"
-                 min="2020-01-01" ref="year_day"
-                 @change="setCreateDate"
-          >
+        </div>
+        <eva-icon key="1003" name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
+                  @click="showNumPad"></eva-icon>
+      </Layout>
+      <div class="money_box go go_bottom" ref="NumPad">
+        <eva-icon name="close-outline" fill="#3da75b" class="back" animation="shake" height="100%"
+                  @click="hideNumPad"></eva-icon>
+        <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1"/>
+        <Types @exposeType="getType" :value="recordListItem.types"/>
+        <div style="height: 53px;position: relative;">
+          <label for="start" class="header_input">
+            <input type="date" id="start" name="start"
+                   min="2020-01-01" ref="year_day"
+                   @change="setCreateDate"
+            >
+          </label>
+        </div>
+        <label class="remark">
+          <span>备注:</span>
+          <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
         </label>
+        <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"/>
+        <Message :type="msg_type" ref="msg" v-show="msg_show">
+          {{ msg }}
+        </Message>
       </div>
-      <label class="remark">
-        <span>备注:</span>
-        <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
-      </label>
-      <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"/>
-      <Message :type="msg_type" ref="msg" v-show="msg_show">
-        {{ msg }}
-      </Message>
     </div>
-  </div>
 </template>
 <script lang='ts'>
 import Vue from 'vue';
