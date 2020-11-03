@@ -95,7 +95,6 @@ export default class ListItem extends mixins(listDepository) {
   height: 38px;
   width: 38px;
   border-radius: 50%;
-
   &:hover {
     background-color: $navBgColor;
   }

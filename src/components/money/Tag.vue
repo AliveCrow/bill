@@ -1,18 +1,16 @@
 <template>
   <div class="tags" ref="tags">
-    <div class="tags_box">
-      <transition-group name="list" tag="p">
-        <div v-for="(item,index) in tags" @click="toggle(item);"
+      <transition-group name="list" tag="p" class="tags_box">
+        <div v-for="(item,index) in tags"    @click="toggle(item); "
              class="tag" :class="{selected:selectedTags.indexOf(item)>=0}"
-             :name="item" :key="index" style="display: inline-block"
+             :name="item" :key="index" style="display: inline-block;"
         >
-  <span>
-    {{ item.name }}
-  </span>
+          <span>
+            {{ item.name }}
+          </span>
         </div>
+        <Icon key="[" @iconToggle="create" className="tag add" idName="add"  />
       </transition-group>
-      <Icon @iconToggle="create" className="tag add" idName="add"/>
-    </div>
   </div>
 
 </template>

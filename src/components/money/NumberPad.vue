@@ -1,5 +1,5 @@
 <template>
-  <div id="number_pad">
+  <div id="number_pad" >
     <div class="number">
       {{ insert }}
     </div>

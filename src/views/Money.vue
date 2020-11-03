@@ -48,10 +48,10 @@
                   @click="showNumPad"></eva-icon>
       </Layout >
       <div class="money_box go go_bottom" ref="NumPad" :style="{height:h+'px'}" >
-        <div class="money_box_con" style="padding-bottom: 100px">
+        <div class="money_box_con">
           <eva-icon name="close-outline" fill="#3da75b" class="back" animation="shake" height="100%"
                     @click="hideNumPad"></eva-icon>
-          <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1"style="padding-bottom: 60px" />
+          <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1" style="padding-bottom: 160px" />
           <Types @exposeType="getType" :value="recordListItem.types"/>
           <div style="height: 53px;position: relative;">
             <label for="start" class="header_input">
