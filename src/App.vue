@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view  style="height:100%;overflow-y:auto" />
+    <router-view  style="height:100%;overflow-y:auto" :key="this.$route.name" :showHeight.sync="showHeight"   />
     <Nav v-show="!(name ==='NotFound') "  ref="nav" style="position: fixed;bottom: 0;width: 100%" :class="{show:!hideshow}"  />
   </div>
 </template>
@@ -10,9 +10,9 @@ export default {
   data(){
     return {
       name:'',
-      docmHeight: document.documentElement.clientHeight ||document.body.clientHeight,
-      showHeight: document.documentElement.clientHeight ||document.body.clientHeight,
-      hideshow:true
+      hideshow:true,
+      showHeight:0,
+      docmHeight:document.documentElement.clientHeight || document.body.clientHeight
     }
   },
   created() {
@@ -21,11 +21,7 @@ export default {
   },
   mounted() {
     //监听软键盘事件
-    window.onresize = ()=>{
-      return(()=>{
-        this.showHeight = document.documentElement.clientHeight || document.body.clientHeight;
-      })()
-    }
+
   },
   watch: {
     //监听显示高度

@@ -35,6 +35,12 @@ export default class Label extends mixins(listDepository) {
   mounted() {
     this.input = document.querySelectorAll('.tag_input');
     this.edit = document.querySelectorAll('.edit');
+    window.onresize = ()=>{
+      return(()=>{
+        this.showHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        this.$emit('update:showHeight',this.showHeight)
+      })()
+    }
   }
 
   @Watch('isError')

@@ -1,5 +1,5 @@
 <template>
-  <div id="money">
+  <div id="money" >
     <Layout className="layout_one" ref="layout_one" key="101010">
       <HeaderMain key="1001" :allYearPersent.sync="allYearPersent" :billyType.sync="billyType"/>
       <div key="1002" class="billy_box">
@@ -115,11 +115,13 @@ export default class Money extends mixins(listDepository) {
   mounted() {
     // @ts-ignore
     this.$refs.year_day.value = dayjs().format('YYYY-MM-DD');
-    window.onresize = () => {
-      return (() => {
+    window.onresize = ()=>{
+      return(()=>{
+        this.showHeight = document.documentElement.clientHeight || document.body.clientHeight;
         this.ph = 180;
-      })();
-    };
+        this.$emit('update:showHeight',this.showHeight)
+      })()
+    }
   }
 
 
@@ -203,7 +205,6 @@ export default class Money extends mixins(listDepository) {
 
   @Watch('isError')
   onch() {
-    console.log(this.isError);
     if (this.isError) {
       this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', 'Danger');
       setTimeout(() => {

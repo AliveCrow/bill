@@ -10,6 +10,9 @@ export default class listDepository extends Vue {
     msg: string = '';
     msg_type: string = '';
     msg_show: boolean = false;
+    docmHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    showHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    hideshow = true;
 
     created() {
         this.$store.commit(('recordStore/recordListgetter'), ('setDate')); //获取数据,初始化时间
@@ -37,16 +40,16 @@ export default class listDepository extends Vue {
     }
 
     get tags() {
-        this.$store.commit('tagsStore/tagsGetter')
+        this.$store.commit('tagsStore/tagsGetter');
         return this.$store.state.tagsStore.tagsDataSource;
     }
 
     checkTag(text: string) {
         let res = this.tags.filter((item: { name: string; }) => item.name === text);
-        if(res.length !== 0 || text === ''){
-            return false
-        }else {
-            return true
+        if (res.length !== 0 || text === '') {
+            return false;
+        } else {
+            return true;
         }
     }
 
