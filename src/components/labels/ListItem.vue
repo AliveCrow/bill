@@ -4,9 +4,9 @@
       <use :xlink:href="'#'+idName[0]"/>
     </svg>
     <label class="label_item_name">
-      <input type="text" :value="tagName" @input="inputValue" class="label_item_input tag_input"/>
+      <input type="text" :value="tagName" @focus="change" class="label_item_input tag_input"/>
     </label>
-    <svg class="icon icon_label icon_target" aria-hidden="true" @click="change_id">
+    <svg class="icon icon_label icon_target" ref="icon_target" aria-hidden="true" @click="change_id">
       <use :xlink:href="'#'+idName[1]"/>
     </svg>
   </box>
@@ -31,25 +31,44 @@ export default class ListItem extends mixins(listDepository) {
   idName: string[] = ['label', 'edit'];
   input: any;
 
+  cancelF() {
+    this.input.forEach(item => {
+      item.blur();
+    });
+  }
+
+
+  change(e) {
+    this.idName = ['delete', 'confirm'];
+    let thisEl = this.input[this.index];
+    thisEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        thisEl.blur();
+        this.change_tag();
+        this.idName = ['label', 'edit'];
+      }
+    });
+    return;
+  }
+
+  change_tag() {
+    this.tagName = this.input[this.index].value;
+    let argus = {index: this.index, tagName: this.tagName};
+    this.$store.commit('tagsStore/tagsUpdate', argus);
+    this.tagName = this.$store.state.tagsStore.tagsDataSource[this.index].name
+  }
 
   change_id() {
     if (this.idName[1] === 'edit') {
-      this.input[this.index].select();
+      this.input[this.index].select()
       this.idName = ['delete', 'confirm'];
     } else {
-      let argus = {index: this.index, tagName: this.tagName};
-      let result = this.$store.commit('tagsStore/tagsUpdate', argus);
-      if (result === 'fail') {
-        this.tagName = this.tag;
-      }
+      this.change_tag();
       this.idName = ['label', 'edit'];
     }
+
   }
 
-  inputValue(event: KeyboardEvent) {
-    // @ts-ignore
-    this.tagName = event.target.value;
-  }
 
   delete_tag() {
     if (this.idName[0] === 'delete') {
@@ -63,9 +82,6 @@ export default class ListItem extends mixins(listDepository) {
 
   mounted() {
     this.input = document.querySelectorAll('.tag_input');
-    this.input[this.index].addEventListener('focus', () => {
-      this.idName = ['delete', 'confirm'];
-    });
   }
 
 }

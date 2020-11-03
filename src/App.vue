@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <router-view style="height: 100vh;overflow-y: hidden;padding-bottom: 100px" />
-    <Nav v-show="!(name ==='NotFound')" />
+    <router-view  style="height:100%;overflow-y:auto" />
+    <Nav v-show="!(name ==='NotFound') "  ref="nav" style="position: fixed;bottom: 0;width: 100%" :class="{show:!hideshow}"  />
   </div>
 </template>
 <script>
@@ -9,13 +9,36 @@
 export default {
   data(){
     return {
-      name:''
+      name:'',
+      docmHeight: document.documentElement.clientHeight ||document.body.clientHeight,
+      showHeight: document.documentElement.clientHeight ||document.body.clientHeight,
+      hideshow:true
     }
   },
   created() {
     this.name = this.$route.name
-  }
 
+  },
+  mounted() {
+    //监听软键盘事件
+    window.onresize = ()=>{
+      return(()=>{
+        this.showHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      })()
+    }
+  },
+  watch: {
+    //监听显示高度
+    showHeight:function() {
+      if(this.docmHeight > this.showHeight){
+        //隐藏
+        this.hideshow=false
+      }else{
+        //显示
+        this.hideshow=true
+      }
+    }
+  },
 }
 </script>
 <style lang="scss">
@@ -48,9 +71,11 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
-  overflow: hidden;
+  //overflow: hidden;
 }
-
+.show{
+  visibility: hidden;
+}
 .icon {
   width: 1em;
   height: 1em;

@@ -1,5 +1,6 @@
 <template>
   <box>
+
     <Icon idName="label" className="icon_label label"/>
     <label class="label_item_name" >
       <input placeholder="创建新标签" type="text" v-model="text" class="label_item_input"/>

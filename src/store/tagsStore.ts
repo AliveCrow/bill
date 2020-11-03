@@ -43,18 +43,23 @@ const tagsStore = {
             }
         },
         tagsUpdate: function (state: storeTags, args: { index: number, tagName: string }) {
+            // @ts-ignore
+            let a = state.tagsDataSource[args.index].name
+            if(args.tagName===''){
+                alert('标签不能为空');
+                return
+            }
             const items = state.tagsDataSource!.filter((item: { name: string; }) => item.name === args.tagName);
             // @ts-ignore
             if (state.tagsDataSource[args.index].name === args.tagName) {
-
             } else if (items.length !== 0) {
                 alert('已有同名标签');
-                return 'fail';
+                return
             } else {
                 // @ts-ignore
                 state.tagsDataSource[args.index].name = args.tagName;
                 localStorage.setItem(state.tagsListName, JSON.stringify(state.tagsDataSource));
-                return 'success';
+                return
             }
         },
         tagsRemoved: function (state: storeTags, index: number) {

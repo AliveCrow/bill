@@ -1,8 +1,8 @@
 <template>
-    <div id="money">
+    <div id="money" style="padding-bottom: 100px">
       <Layout className="layout_one" ref="layout_one" key="101010"  >
         <HeaderMain  key="1001" :allYearPersent.sync="allYearPersent" :billyType.sync="billyType"/>
-        <div key="1002" class="billy_box" style="padding-bottom: 100px">
+        <div key="1002" class="billy_box">
           <transition name="list">
             <div class="info_box" key="911" v-if="billyType === '月账单'">
               <span class="title">月账单</span>
@@ -47,11 +47,11 @@
         <eva-icon key="1003" name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
                   @click="showNumPad"></eva-icon>
       </Layout >
-      <div class="money_box go go_bottom" ref="NumPad" :style="{height:h+'px'}">
-        <div class="money_box_con">
+      <div class="money_box go go_bottom" ref="NumPad" :style="{height:h+'px'}" >
+        <div class="money_box_con" style="padding-bottom: 100px">
           <eva-icon name="close-outline" fill="#3da75b" class="back" animation="shake" height="100%"
                     @click="hideNumPad"></eva-icon>
-          <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1"/>
+          <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1"style="padding-bottom: 60px" />
           <Types @exposeType="getType" :value="recordListItem.types"/>
           <div style="height: 53px;position: relative;">
             <label for="start" class="header_input">
@@ -337,6 +337,7 @@ export default class Money extends mixins(listDepository) {
     position: relative;
     height: 100%;
     width: 100%;
+    overflow: auto;
   }
   .back {
     position: fixed;

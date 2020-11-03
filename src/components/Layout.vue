@@ -1,9 +1,10 @@
 <template>
   <div class="money_app"   >
-    <div id="content" style="padding-bottom: 70px;">
+    <div id="content">
       <div class="main" :class="className" ref="Layout">
-        <div class="main_slot" :style="{height:h+'px'}">
+        <div class="main_slot">
             <slot ></slot>
+
         </div>
       </div>
     </div>
@@ -23,9 +24,7 @@ export default {
       h:0,
     }
   },
-  created() {
-    this.h = document.body.clientHeight;
-  }
+
 };
 </script>
 
