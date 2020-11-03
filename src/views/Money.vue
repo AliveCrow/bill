@@ -48,26 +48,30 @@
                   @click="showNumPad"></eva-icon>
       </Layout>
       <div class="money_box go go_bottom" ref="NumPad">
-        <eva-icon name="close-outline" fill="#3da75b" class="back" animation="shake" height="100%"
-                  @click="hideNumPad"></eva-icon>
-        <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1"/>
-        <Types @exposeType="getType" :value="recordListItem.types"/>
-        <div style="height: 53px;position: relative;">
-          <label for="start" class="header_input">
-            <input type="date" id="start" name="start"
-                   min="2020-01-01" ref="year_day"
-                   @change="setCreateDate"
-            >
+        <div class="money_box_con">
+          <eva-icon name="close-outline" fill="#3da75b" class="back" animation="shake" height="100%"
+                    @click="hideNumPad"></eva-icon>
+          <NumberPad :value.sync="recordListItem.num" @submit="submit" :key="uns1"/>
+          <Types @exposeType="getType" :value="recordListItem.types"/>
+          <div style="height: 53px;position: relative;">
+            <label for="start" class="header_input">
+              <input type="date" id="start" name="start"
+                     min="2020-01-01" ref="year_day"
+                     @change="setCreateDate"
+              >
+            </label>
+          </div>
+          <label class="remark">
+            <span>备注:</span>
+            <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
           </label>
+          <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"/>
+
+          <Message :type="msg_type" ref="msg" v-show="msg_show">
+            {{ msg }}
+          </Message>
         </div>
-        <label class="remark">
-          <span>备注:</span>
-          <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
-        </label>
-        <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"/>
-        <Message :type="msg_type" ref="msg" v-show="msg_show">
-          {{ msg }}
-        </Message>
+
       </div>
     </div>
 </template>
@@ -180,12 +184,13 @@ export default class Money extends mixins(listDepository) {
 
   @Watch('isError')
   onch() {
+    console.log(this.isError );
     if (this.isError) {
       this.showMsg('标签创建失败,请检查是否有重名标签并且不能为空', 'Danger');
       setTimeout(() => {
         this.msg_show = false;
         this.isError = false;
-      }, 1500);
+      }, 1000);
     }
   }
 }
@@ -305,15 +310,21 @@ export default class Money extends mixins(listDepository) {
   display: flex;
   flex-direction: column-reverse;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: absolute;
   top: 0;
   background-color: #fff;
   padding-bottom: 63px;
   overflow: hidden;
-
+  .money_box_con{
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+  }
   .back {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
   }

@@ -50,10 +50,19 @@ export default class Tag extends mixins(listDepository) {
 
   create() {
     let text = prompt('请输入要添加的标签名称') as string
-    if(this.checkTag(text)){
-      this.$store.commit('tagsStore/tagsSetter', text);
-    }else {
-      this.$emit('update:isError',true)
+    if(text==null){
+      return
+    }
+    else if(text){
+      if(this.checkTag(text)){
+        this.$store.commit('tagsStore/tagsSetter', text);
+      }else {
+        this.$emit('update:isError',true)
+      }
+    }
+    else{
+      //“取消”事件
+      return
     }
 
   }
