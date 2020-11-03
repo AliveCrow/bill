@@ -84,14 +84,12 @@ export default class Tag extends mixins(listDepository) {
 
 .tags {
   text-align: left;
-  padding: 0 20px;
+  padding:80px 20px 10px;
   overflow-y: auto;
-
   .tags_box {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
     .tag {
       color: $whiteColor;
       background-color: $fontColor;

@@ -1,9 +1,9 @@
 <template>
-  <div class="money_app"  >
-    <div id="content" style="padding-bottom: 70px">
+  <div class="money_app"   >
+    <div id="content" style="padding-bottom: 70px;">
       <div class="main" :class="className" ref="Layout">
-        <div class="main_slot">
-            <slot></slot>
+        <div class="main_slot" :style="{height:h+'px'}">
+            <slot ></slot>
         </div>
       </div>
     </div>
@@ -16,9 +16,16 @@ import HeaderMain from '@/components/HeaderMain.vue';
 
 export default {
   components: {HeaderMain},
-  props: ['className'],
+  props: ['className','height'],
   name: 'Layout',
-
+  data(){
+    return {
+      h:0,
+    }
+  },
+  created() {
+    this.h = document.body.clientHeight;
+  }
 };
 </script>
 
@@ -28,7 +35,6 @@ export default {
 
 .money_app {
   #content {
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -38,12 +44,10 @@ export default {
       .main_slot {
         background-color: #fff;
         position: relative;
+
       }
-
       overflow-y: auto;
-      //padding-bottom: 100px;
       height: 100%;
-
     }
 
   }

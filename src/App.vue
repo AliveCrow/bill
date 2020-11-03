@@ -48,7 +48,7 @@ body {
   flex-direction: column;
   display: flex;
   height: 100vh;
-
+  overflow: hidden;
 }
 
 .icon {

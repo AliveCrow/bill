@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Layout  key="1010101010">
+    <Layout  key="1010101010" >
       <HeaderMain key="1201"  />
-      <div key="1202"  class="billy_box">
-          <StaticHeader  />
+      <div key="1202"  class="billy_box" style="padding-bottom: 100px">
+          <StaticHeader   />
       </div>
     </Layout>
   </div>

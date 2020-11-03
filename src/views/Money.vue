@@ -1,8 +1,8 @@
 <template>
     <div id="money">
-      <Layout className="layout_one" ref="layout_one" key="101010">
-        <HeaderMain key="1001" :allYearPersent.sync="allYearPersent" :billyType.sync="billyType"/>
-        <div key="1002" class="billy_box">
+      <Layout className="layout_one" ref="layout_one" key="101010"  >
+        <HeaderMain  key="1001" :allYearPersent.sync="allYearPersent" :billyType.sync="billyType"/>
+        <div key="1002" class="billy_box" style="padding-bottom: 100px">
           <transition name="list">
             <div class="info_box" key="911" v-if="billyType === '月账单'">
               <span class="title">月账单</span>
@@ -46,8 +46,8 @@
         </div>
         <eva-icon key="1003" name="edit-outline" fill="#3da75b" class="icons" animation="shake" height="100%"
                   @click="showNumPad"></eva-icon>
-      </Layout>
-      <div class="money_box go go_bottom" ref="NumPad">
+      </Layout >
+      <div class="money_box go go_bottom" ref="NumPad" :style="{height:h+'px'}">
         <div class="money_box_con">
           <eva-icon name="close-outline" fill="#3da75b" class="back" animation="shake" height="100%"
                     @click="hideNumPad"></eva-icon>
@@ -61,12 +61,11 @@
               >
             </label>
           </div>
-          <label class="remark">
+          <label class="remark" >
             <span>备注:</span>
             <input v-model="recordListItem.remark" type="text" placeholder="请在这里输入备注">
           </label>
-          <Tag :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"/>
-
+          <Tag  :selectedTags.sync="recordListItem.tags" :key="uns3" :isError.sync="isError"/>
           <Message :type="msg_type" ref="msg" v-show="msg_show">
             {{ msg }}
           </Message>
@@ -106,6 +105,11 @@ export default class Money extends mixins(listDepository) {
   msg_show: boolean = false;
   allYearPersent = {};
   billyType: string = '月账单';
+  h:number =0;
+
+  created(){
+    this.h = document.body.clientHeight;
+  }
 
   mounted() {
     // @ts-ignore
@@ -146,6 +150,8 @@ export default class Money extends mixins(listDepository) {
     this.el.classList.remove('go_top');
     setTimeout(() => {
       this.resetNumPad();
+      // @ts-ignore
+      this.el.style.display ='none'
     }, 500);
   }
 
@@ -154,8 +160,14 @@ export default class Money extends mixins(listDepository) {
     this.uns2 = 2;
     this.uns3 = 3;
     this.el = this.$refs.NumPad as Element;
-    this.el.classList.remove('go_bottom');
-    this.el.classList.add('go_top');
+    // @ts-ignore
+    this.el.style.display ='flex'
+    setTimeout(()=>{
+      // @ts-ignore
+      this.el.classList.remove('go_bottom');
+      // @ts-ignore
+      this.el.classList.add('go_top');
+    },100)
   }
 
   submit() {
@@ -228,7 +240,10 @@ export default class Money extends mixins(listDepository) {
   }
 }
 
-
+#app{
+  overflow: hidden;
+  height: 100vh;
+}
 .icons {
   background-color: rgba($whiteColor, 1);
   box-shadow: 0 0 10px rgba(#000, .2);
@@ -307,10 +322,10 @@ export default class Money extends mixins(listDepository) {
 
 .money_box {
   z-index: 10;
-  display: flex;
+  display: none;
   flex-direction: column-reverse;
   width: 100%;
-  height: 100vh;
+  //height: 100vh;
   position: absolute;
   top: 0;
   background-color: #fff;
@@ -320,7 +335,7 @@ export default class Money extends mixins(listDepository) {
     display: flex;
     flex-direction: column-reverse;
     position: relative;
-    height: 100vh;
+    height: 100%;
     width: 100%;
   }
   .back {
@@ -359,15 +374,13 @@ export default class Money extends mixins(listDepository) {
     font-size: 1.2rem;
     display: flex;
     align-items: center;
-
+    min-height: 3rem;
     span {
       width: 4rem;
     }
-
     input {
-      padding: 0 8px;
+      padding: 1px 8px;
       width: 100%;
-      height: 2rem;
       outline: none;
       border: none;
       line-height: 40px;

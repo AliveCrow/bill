@@ -7,7 +7,7 @@
       <div class="modify"  key="1101">
         修改标签
       </div>
-      <div class="labels_box" key="1102">
+      <div class="labels_box" key="1102" style="padding-bottom: 100px">
 <!--        创建新标签-->
         <Create key="1103" :isError.sync="isError"  />
         <transition-group name="list" tag="p">
