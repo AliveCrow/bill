@@ -28,15 +28,15 @@ import listDepository from '@/mixins/listDepository';
 export default class Header extends mixins(listDepository) {
 
 
-  selected: boolean = true;
-  povit: string = '-';
+  selected = true;
+  povit = '-';
   date: string =  dayjs().format('YYYY-MM');
 
-  billC(bool:boolean) {
+  billC(bool: boolean) {
     this.selected = bool;
     this.$emit('update:billyType', this.selected ? '月账单' : '年账单');
   }
-  selectPayOrIncome(e:string) {
+  selectPayOrIncome(e: string) {
     this.povit = e;
     this.$emit('update:payOrIncome', e);
   }
@@ -45,7 +45,7 @@ export default class Header extends mixins(listDepository) {
     this.$emit('update:date',this.date)
   }
 
-};
+}
 </script>
 
 <style scoped lang='scss'>

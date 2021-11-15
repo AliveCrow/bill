@@ -27,11 +27,11 @@ import dayjs from 'dayjs';
   components: {Sum, Header}
 })
 export default class HeaderMain extends mixins(listDepository,) {
-  payOrIncome: string = '-';
-  billyType: string = '月账单';
-  total: number = 0;
-  billy: number = 0;
-  date:string  ='';
+  payOrIncome = '-';
+  billyType = '月账单';
+  total = 0;
+  billy = 0;
+  date  ='';
 
 
   init() {
@@ -62,7 +62,7 @@ export default class HeaderMain extends mixins(listDepository,) {
 
   @Watch('billyType')
   onBillyType() {
-    let allYearPersent = {
+    const allYearPersent = {
       allYearTotal:0,
       InCome:0,
       pay:0
@@ -74,11 +74,11 @@ export default class HeaderMain extends mixins(listDepository,) {
       this.total= 0;
       this.billy = 0;
       //今年的账单
-      let toYearList = this.records.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; }) =>
+      const toYearList = this.records.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined }) =>
           dayjs(item.createAt).format('YYYY') === this.setDate(this.date)('YYYY')
       );
       // 算出收入和支出
-      toYearList.forEach((item: { items: any[]; }) => {
+      toYearList.forEach((item: { items: any[] }) => {
         item.items.forEach(item => {
           allYearPersent.allYearTotal = allYearPersent.allYearTotal+item.num
           if(item.types === '-'){

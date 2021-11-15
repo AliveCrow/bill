@@ -98,15 +98,15 @@ export default class Money extends mixins(listDepository) {
   };
   date: string = dayjs().format('YYYY-MM-DD');
   list: string[] = [];
-  uns1: number = 1;
-  uns2: number = 2;
-  uns3: number = 3
-  isError: boolean = false;
-  msg_show: boolean = false;
+  uns1 = 1;
+  uns2 = 2;
+  uns3 = 3
+  isError = false;
+  msg_show = false;
   allYearPersent = {};
-  billyType: string = '月账单';
-  h: number = 0;
-  ph: number = 63;
+  billyType = '月账单';
+  h = 0;
+  ph = 63;
 
   created() {
     this.h = document.body.clientHeight;
@@ -133,7 +133,7 @@ export default class Money extends mixins(listDepository) {
     this.recordListItem.types = type;
   }
 
-  setCreateDate(e: { target: { value: string; }; }) {
+  setCreateDate(e: { target: { value: string } }) {
     this.recordListItem.createAt = e.target.value;
     // @ts-ignore
     this.$refs.year_day.value = e.target.value;

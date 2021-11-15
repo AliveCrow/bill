@@ -8,12 +8,12 @@ type TypeList = {
 }
 type Tag = {
     id: number;
-    name: string
+    name: string;
 }
 type TagConfig = {
     data: Tag[];
     getter: (recordStoreExtracting: string) => Tag[];
     setter: (value: Tag) => 'success' | 'duplicated';
     update: (index: number, tagName: string) => 'success' | 'fail';
-    remove:(index:number) =>  'success' | 'fail';
+    remove: (index: number) =>  'success' | 'fail';
 }

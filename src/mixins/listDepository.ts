@@ -7,9 +7,9 @@ import dayjs from 'dayjs';
 export default class listDepository extends Vue {
     //@ts-ignore
     $store;
-    msg: string = '';
-    msg_type: string = '';
-    msg_show: boolean = false;
+    msg = '';
+    msg_type = '';
+    msg_show = false;
     docmHeight = document.documentElement.clientHeight || document.body.clientHeight;
     showHeight = document.documentElement.clientHeight || document.body.clientHeight;
     hideshow = true;
@@ -32,7 +32,7 @@ export default class listDepository extends Vue {
         return this.$store.state.date;
     }
 
-    setDate(date: string, change_source: boolean = true) {
+    setDate(date: string, change_source = true) {
         if (change_source) {
             this.$store.commit('setDate', date);
         }
@@ -45,7 +45,7 @@ export default class listDepository extends Vue {
     }
 
     checkTag(text: string) {
-        let res = this.tags.filter((item: { name: string; }) => item.name === text);
+        const res = this.tags.filter((item: { name: string }) => item.name === text);
         if (res.length !== 0 || text === '') {
             return false;
         } else {

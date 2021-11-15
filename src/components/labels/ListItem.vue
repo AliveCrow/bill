@@ -40,7 +40,7 @@ export default class ListItem extends mixins(listDepository) {
 
   change(e) {
     this.idName = ['delete', 'confirm'];
-    let thisEl = this.input[this.index];
+    const thisEl = this.input[this.index];
     thisEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         thisEl.blur();
@@ -53,7 +53,7 @@ export default class ListItem extends mixins(listDepository) {
 
   change_tag() {
     this.tagName = this.input[this.index].value;
-    let argus = {index: this.index, tagName: this.tagName};
+    const argus = {index: this.index, tagName: this.tagName};
     this.$store.commit('tagsStore/tagsUpdate', argus);
     this.tagName = this.$store.state.tagsStore.tagsDataSource[this.index].name
   }

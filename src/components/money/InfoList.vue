@@ -41,16 +41,16 @@ import dayjs from 'dayjs';
 @Component
 export default class InfoList extends mixins(listDepository) {
   sum: [] | undefined;
-  monthList:[]|undefined;
+  monthList: []|undefined;
 
   getMonLi(){}
 
   created() {
-    this.monthList = this.records.filter((item: { createAt: string; })=>
+    this.monthList = this.records.filter((item: { createAt: string })=>
         dayjs(item.createAt).format('YYYY-MM') === this.setDate('')('YYYY-MM')
     )
   }
-  getSum(items:any[], type: any) {
+  getSum(items: any[], type: any) {
     let sum = 0;
     items.filter(item => item.types === type).forEach(item => {
       return sum = item.num + sum;
@@ -60,7 +60,7 @@ export default class InfoList extends mixins(listDepository) {
 
   @Watch('getDate')
   dateChange(){
-    this.monthList = this.records.filter((item: { createAt: string; })=>
+    this.monthList = this.records.filter((item: { createAt: string })=>
         dayjs(item.createAt).format('YYYY-MM') === this.setDate(this.getDate)('YYYY-MM')
     )
   }

@@ -1,6 +1,6 @@
 
 
-let id:number = parseInt(localStorage.getItem('idMax') || '7') || 7;
+let id: number = parseInt(localStorage.getItem('idMax') || '7') || 7;
 
 const createId = ()=>{
     id++

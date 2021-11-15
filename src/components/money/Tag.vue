@@ -47,7 +47,7 @@ export default class Tag extends mixins(listDepository) {
 
 
   create() {
-    let text = prompt('请输入要添加的标签名称') as string
+    const text = prompt('请输入要添加的标签名称') as string
     if(text==null){
       return
     }

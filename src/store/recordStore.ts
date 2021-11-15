@@ -5,8 +5,8 @@ require('dayjs/locale/zh-cn');
 
 
 type storeRecord = {
-    recordListsName: string,
-    recordLists: TypeList[],
+    recordListsName: string;
+    recordLists: TypeList[];
 }
 
 const state: storeRecord = {
@@ -38,7 +38,7 @@ const recordStore = {
         },
 
         setGroupings(state: storeRecord, getters: any) {
-            let newList = getters.setSorting;
+            const newList = getters.setSorting;
             let hash: any[];
             if (newList.length === 0) {
                 hash = [];
@@ -46,8 +46,8 @@ const recordStore = {
                 hash = [{createAt: newList[0].createAt, items: [newList[0]]}];
                 //去重
                 for (let i = 1; i < newList.length; i++) {
-                    let currentitem = newList[i];
-                    let lastitem = hash[hash.length - 1];
+                    const currentitem = newList[i];
+                    const lastitem = hash[hash.length - 1];
                     if (dayjs(currentitem.createAt).isSame(lastitem.createAt)) {
                         lastitem.items.push(currentitem);
                     } else {
@@ -58,7 +58,7 @@ const recordStore = {
             return hash;
         },
         setSorting(state: storeRecord) {
-            let newList = clone(state.recordLists);
+            const newList = clone(state.recordLists);
             newList.forEach(item => {
                 item.createAt = dayjs(item.createAt).format('YYYY-MM-DD');
             });
@@ -76,11 +76,11 @@ const recordStore = {
         },
         payOrIncomeSelect(state: storeRecord, getters: any) {
             return function (date: string, payOrIncome: string) {
-                let num ={
+                const num ={
                     billy: 0,
                     total: 0
                 }
-                let toMonthList = getters['getMonList'](date);
+                const toMonthList = getters['getMonList'](date);
                 if (toMonthList.length === 0) {
                     // @ts-ignore
                     return num
@@ -90,7 +90,7 @@ const recordStore = {
                 } else {
                     // @ts-ignore
                     let midArr: any[] = [];
-                    midArr = toMonthList.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; types: string; })=>
+                    midArr = toMonthList.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; types: string })=>
                         dayjs(item.createAt).format('YYYY-MM') === date
                         &&
                         item.types === payOrIncome

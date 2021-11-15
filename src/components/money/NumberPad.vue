@@ -76,7 +76,7 @@ export default class numberPag extends Vue {
   }
 
   addAni(arr: any[]){
-    arr.forEach((item: { addEventListener: (arg0: string, arg1: { (e: any): void; (e: any): void; }) => void; })=>{
+    arr.forEach((item: { addEventListener: (arg0: string, arg1: { (e: any): void; (e: any): void }) => void })=>{
       item.addEventListener('touchstart',function (e: any){
         // @ts-ignore
         this.style.backgroundColor = 'rgba(238,238,238,.8)'

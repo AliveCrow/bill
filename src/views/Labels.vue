@@ -29,8 +29,8 @@ import {mixins} from 'vue-class-component';
 export default class Label extends mixins(listDepository) {
   input: any;
   edit: any;
-  isError: boolean = false;
-  msg_show: boolean = false;
+  isError = false;
+  msg_show = false;
 
   mounted() {
     this.input = document.querySelectorAll('.tag_input');

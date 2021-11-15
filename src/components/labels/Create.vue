@@ -19,7 +19,7 @@ import listDepository from '@/mixins/listDepository';
   components: {box,},
 })
 export default class Label  extends mixins(listDepository){
-  text: string= ''
+  text= ''
 
 
   create_tag() {

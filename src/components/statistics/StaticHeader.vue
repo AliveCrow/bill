@@ -40,11 +40,11 @@ import dayjs from 'dayjs';
 })
 export default class StaticHeader extends mixins(listDepository) {
 
-  payOrIncome: string = '-';
+  payOrIncome = '-';
   month: string = dayjs().format('YYYY-MM-DD');
-  day:string = dayjs().format('YYYY-MM-DD');
-  line: number = 0;
-  a!:HTMLInputElement;
+  day: string = dayjs().format('YYYY-MM-DD');
+  line = 0;
+  a!: HTMLInputElement;
 
 
   mounted() {
@@ -53,7 +53,7 @@ export default class StaticHeader extends mixins(listDepository) {
 
   }
 
-  selectDate(e: { target: { value: any; }; }) {
+  selectDate(e: { target: { value: any } }) {
     this.a.value  = e.target.value;
     this.day = e.target.value;
   }

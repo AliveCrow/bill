@@ -34,22 +34,22 @@ import SelectDate from '@/components/SelectDate.vue';
 export default class myEchart extends mixins(listDepository) {
   @Prop(String) name: string | undefined;
   @Prop(String) eChartsType: string | undefined;
-  @Prop(String) replaceWith:string | undefined;
-  @Prop(String) month:string | undefined;
-  @Prop(String) day:string | undefined;
+  @Prop(String) replaceWith: string | undefined;
+  @Prop(String) month: string | undefined;
+  @Prop(String) day: string | undefined;
 
-  key1:number = 11;
-  key2:number = 12; //没有数据变更就不会刷新
+  key1 = 11;
+  key2 = 12; //没有数据变更就不会刷新
 
-  selected: boolean = true;
+  selected = true;
   //pie
   tagsToday: any[] = []; //今天里产生的标签
   billyToday: any[] = []; //今天内产生的账单
   newArr: any[] = [];   //echarts数据
   //line
   lineData: any[] = [];
-  lineSum:number = 0;
-  color:string = ''
+  lineSum = 0;
+  color = ''
 
   change(bool: boolean) {
     this.selected = bool;
@@ -58,14 +58,14 @@ export default class myEchart extends mixins(listDepository) {
   //pie
   getTagsToday(selected: boolean) {
     this.tagsToday = [];
-    let type = selected ? '-' : '+';
+    const type = selected ? '-' : '+';
     // 找出今天一天所有消费里的标签
     this.primordialRecords
-        .filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; types: string; }) =>
+        .filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; types: string }) =>
             dayjs(item.createAt).format('YYYY-MM-DD') === dayjs(this.day).format('YYYY-MM-DD') && item.types === type
         ).forEach((item1: { tags: any }) => {
           item1.tags
-              .forEach((res: { name: string; }) => {
+              .forEach((res: { name: string }) => {
                 if (this.tagsToday.indexOf(res.name) === -1) {
                   this.tagsToday.push(res.name);
                 }
@@ -73,9 +73,9 @@ export default class myEchart extends mixins(listDepository) {
         });
   }
   getBillyToday(selected: boolean) {
-    let type = selected ? '-' : '+';
+    const type = selected ? '-' : '+';
     // 今天的账单
-    this.billyToday = this.primordialRecords.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; tags: any[]; types: string; }) =>
+    this.billyToday = this.primordialRecords.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; tags: any[]; types: string }) =>
         dayjs(item.createAt).format('YYYY-MM-DD') === dayjs(this.day).format('YYYY-MM-DD')
         && this.tagsToday.indexOf(item.tags[0])
         && item.types === type
@@ -88,7 +88,7 @@ export default class myEchart extends mixins(listDepository) {
       };
     });
     for (let i = 0; i < this.billyToday.length; i++) {
-      let cur = this.billyToday[i];
+      const cur = this.billyToday[i];
       for (let j = 0; j < this.newArr.length; j++) {
         if (this.newArr[j].name === cur.tags[0].name) {
            this.newArr[j].value = this.newArr[j].value + cur.num;
@@ -99,14 +99,14 @@ export default class myEchart extends mixins(listDepository) {
 
 
   //line
-  getLineData(selected:boolean){
-    let type = selected ? '-' : '+';
+  getLineData(selected: boolean){
+    const type = selected ? '-' : '+';
     this.color = selected ? '#F56C6C' : '#67C23A';
     this.lineData = []
-   let a =  this.records.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined; })=>
+   const a =  this.records.filter((item: { createAt: string | number | Date | dayjs.Dayjs | undefined })=>
     dayjs(item.createAt).format('YYYY-MM') === this.setDate(this.getDate)('YYYY-MM')
   )
-    a.forEach((item: { items: { types: string;num:number }[]; createAt: any; })=>{
+    a.forEach((item: { items: { types: string;num: number }[]; createAt: any })=>{
       let sum = 0
       item.items.forEach(item=>{
         if(item.types === type){
@@ -130,7 +130,7 @@ export default class myEchart extends mixins(listDepository) {
   drawChart() {
     if((this.eChartsType === 'line' || this.eChartsType === 'pie') && (this.lineData.length !== 0 || this.newArr.length !== 0)){
       // @ts-ignore
-      let myChart= eChart.init(this.$refs.container);
+      const myChart= eChart.init(this.$refs.container);
       let option ;
       if (this.eChartsType === 'line') {
         option = {
@@ -245,7 +245,7 @@ export default class myEchart extends mixins(listDepository) {
     this.drawChart();
   }
 
-};
+}
 </script>
 
 <style scoped lang='scss'>

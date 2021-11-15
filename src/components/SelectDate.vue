@@ -15,12 +15,12 @@ import listDepository from '@/mixins/listDepository';
 
 @Component
 export default class SelectDate extends mixins(listDepository) {
-  @Prop(String) labelClass:string |undefined;
-  @Prop(String) inputClass:string |undefined;
-  @Prop(String) key1:string |undefined;
+  @Prop(String) labelClass: string |undefined;
+  @Prop(String) inputClass: string |undefined;
+  @Prop(String) key1: string |undefined;
 
-  minDate: string = '2001-01';
-  val:string = '';
+  minDate = '2001-01';
+  val = '';
 
   created() {
     this.val = this.setDate('')('YYYY-MM')

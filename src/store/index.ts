@@ -19,7 +19,7 @@ export default new Vuex.Store({
     actions:{},
     getters:{
         getDate(state,getters){
-            return function (format:string){
+            return function (format: string){
                 return dayjs(state.date).format(format)
             }
         }

@@ -1,8 +1,8 @@
 import createId from '@/lib/createId';
 
 type storeTags = {
-    tagsListName: string,
-    tagsDataSource: Tag[] | undefined
+    tagsListName: string;
+    tagsDataSource: Tag[] | undefined;
 }
 
 const state: storeTags = {
@@ -17,7 +17,7 @@ const tagsStore = {
         //tag
         tagsGetter: function (state: storeTags) {
             if(!localStorage.getItem(state.tagsListName)){
-                let defaultTag =
+                const defaultTag =
                     JSON.stringify([{'id': 1, 'name': '买衣服'}, {'id': 2, 'name': '购物'}, {'id': 3, 'name': '游戏'}, {'id': 4, 'name': '出行'}, {'id': 5, 'name': '吃饭'}, {'id': 6, 'name': '旅游'}])
                 localStorage.setItem('tags', defaultTag);
             }
@@ -34,7 +34,7 @@ const tagsStore = {
                 // alert('标签不能为空');
                 // return 'tag is empty';
             } else {
-                let id = createId();
+                const id = createId();
                 // @ts-ignore
                 state.tagsDataSource.push({id: id, name: value});
                 localStorage.setItem('idMax', id.toString());
@@ -42,14 +42,14 @@ const tagsStore = {
                 // return 'success';
             }
         },
-        tagsUpdate: function (state: storeTags, args: { index: number, tagName: string }) {
+        tagsUpdate: function (state: storeTags, args: { index: number; tagName: string }) {
             // @ts-ignore
-            let a = state.tagsDataSource[args.index].name
+            const a = state.tagsDataSource[args.index].name
             if(args.tagName===''){
                 alert('标签不能为空');
                 return
             }
-            const items = state.tagsDataSource!.filter((item: { name: string; }) => item.name === args.tagName);
+            const items = state.tagsDataSource!.filter((item: { name: string }) => item.name === args.tagName);
             // @ts-ignore
             if (state.tagsDataSource[args.index].name === args.tagName) {
             } else if (items.length !== 0) {

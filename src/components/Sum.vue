@@ -16,9 +16,9 @@ import {Component, Prop, PropSync, Watch} from 'vue-property-decorator';
 @Component
 export default class Sum extends Vue{
 
-  @PropSync('payOrIncome', { type: String }) syncedpayOrIncome:string | undefined;
-  @PropSync('total', { type: Number }) syncedtotal:number | undefined;
-  @PropSync('billy', { type: Number }) syncedbilly:number | undefined;
+  @PropSync('payOrIncome', { type: String }) syncedpayOrIncome: string | undefined;
+  @PropSync('total', { type: Number }) syncedtotal: number | undefined;
+  @PropSync('billy', { type: Number }) syncedbilly: number | undefined;
 
 }
 
